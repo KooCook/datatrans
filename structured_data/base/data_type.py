@@ -24,18 +24,34 @@ class URL(Text):
 
 
 class Date(_datetime.date):
-    pass
+    """
+    Represents ``Date``.
+    Adds JSON support to Python Standard Library ``datetime.Date``.
+
+    https://en.wikipedia.org/wiki/ISO_8601#Dates
+    """
+    def json_serial(self):
+        return self.isoformat()
 
 
 class Time(_datetime.time):
-    pass
+    """
+    Represents ``Time``.
+    Adds JSON support to Python Standard Library ``datetime.Time``
+
+    https://en.wikipedia.org/wiki/ISO_8601#Times
+    """
+    def json_serial(self):
+        return self.isoformat()
 
 
 class DateTime(_datetime.datetime):
     """
-    https://en.wikipedia.org/wiki/ISO_8601#Dates
-    """
+    Represents ``DateTime``.
+    Adds JSON support to Python Standard Library ``datetime.DateTime``
 
+    https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations
+    """
     def __str__(self):
         """
         Returns ISO 8601 format date
@@ -43,3 +59,10 @@ class DateTime(_datetime.datetime):
         # TODO: make tests
         """
         return super().isoformat()
+
+    def json_serial(self):
+        return self.isoformat()
+
+
+if __name__ == '__main__':
+    pass
