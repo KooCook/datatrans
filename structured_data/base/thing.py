@@ -16,14 +16,18 @@ class Thing(metaclass=abc.ABCMeta):
                                       'defined in {}'.format(cls.__name__))
 
     def json_serial(self):
-        return {utils.snake_to_camel(k): v for k, v in self.__dict__.items()
-                if utils.snake_to_camel(k) in self.PROPERTIES}
+        properties = {'@type': self.type}
+        for k, v in self.__dict__.items():
+            if utils.snake_to_camel(k) in self.PROPERTIES:
+                properties[utils.snake_to_camel(k)] = v
+        return properties
 
     def __str__(self):
         return json.dumps(self, default=utils.default)
 
-    def get_type_specification(self) -> str:
-        return '"@type":"{}"'.format(self.__class__.__name__)
+    @property
+    def type(self) -> str:
+        return self.__class__.__name__
 
     def add_context(self, context: str = 'https://schema.org/'):
         from structured_data.base.data_type import Text
@@ -33,7 +37,7 @@ class Thing(metaclass=abc.ABCMeta):
         return hasattr(self, '_context')
 
     @property
-    def context(self):
+    def context(self) -> str:
         if self.has_context():
             return self._context
         raise AttributeError('This \'Thing\' has no \'context\'')
