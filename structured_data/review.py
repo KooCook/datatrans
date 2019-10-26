@@ -84,4 +84,12 @@ class AggregateRating(Thing):
 
 
 if __name__ == '__main__':
+    import json
+    from structured_data import utils
+
+    print(json.dumps(AggregateRating(
+        ratingValue=4.6,
+        ratingCount=564,
+        worstRating=0,
+    ), default=utils.default))
     pass

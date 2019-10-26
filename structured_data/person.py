@@ -14,4 +14,8 @@ class Person(Thing):
 
 
 if __name__ == '__main__':
+    import json
+    from structured_data import utils
+
+    print(json.dumps(Person('Mary Stone'), default=utils.default))
     pass

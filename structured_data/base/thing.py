@@ -59,4 +59,13 @@ class Property(list, List):
 
 
 if __name__ == '__main__':
+    from structured_data.base.data_type import Text
+    urls = [
+        Text('http://example.com/coffee_cake.html'),
+    ]
+    print(Property(*urls))
+    t = Thing()
+    print(t.has_context())
+    t.add_context()
+    print(t.context)
     pass

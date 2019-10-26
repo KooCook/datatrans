@@ -266,4 +266,62 @@ class Recipe(Thing):
 
 
 if __name__ == '__main__':
+    import json
+    from structured_data import utils
+
+    print(
+        json.dumps(NutritionInformation(calories=1024, ),
+                   default=utils.default))
+
+    print(
+        json.dumps(Recipe(
+            image=[
+                "https://example.com/photos/1x1/photo.jpg",
+                "https://example.com/photos/4x3/photo.jpg",
+                "https://example.com/photos/16x9/photo.jpg"
+            ],
+            name='Coffee Cake',
+            author=Person('Mary Stone'),
+            datePublished=Date(2018, 3, 10),
+            description="This coffee cake is awesome and perfect for parties.",
+            prepTime=Duration(0, 20 * 60),
+            cookTime=Duration(0, 30 * 60),
+            totalTime=Duration(0, 50 * 60),
+            keywords="cake for a party, coffee",
+            recipeYield='10 servings',
+            recipeCategory='Dessert',
+            recipeCuisine='American',
+            recipeIngredient=[
+                '2 cups of flour',
+                '3/4 cup white sugar',
+                '2 teaspoons baking powder',
+                '1/2 teaspoon salt',
+                '1/2 cup butter',
+                '2 eggs',
+                '3/4 cup milk',
+            ],
+            recipeInstructions=[
+                'Preheat the oven to 350 degrees F. Grease and flour a 9x9 inch pan.',
+                'In a large bowl, combine flour, sugar, baking powder, and salt.',
+                'Mix in the butter, eggs, and milk.',
+                'Spread into the prepared pan.',
+                'Bake for 30 to 35 minutes, or until firm.',
+                'Allow to cool.',
+            ],
+            aggregateRating=AggregateRating(ratingValue=5, ratingCount=18),
+            video=VideoObject(
+                name='How to make a Party Coffee Cak',
+                description='This is how you make a Party Coffee Cake.',
+                thumbnailUrl=[
+                    "https://example.com/photos/1x1/photo.jpg",
+                    "https://example.com/photos/4x3/photo.jpg",
+                    "https://example.com/photos/16x9/photo.jpg"
+                ],
+                contentUrl='http://www.example.com/video123.mp4',
+                embedUrl='http://www.example.com/videoplayer?video=123',
+                uploadDate=Date(2018, 2, 5),
+                duration=Duration(0, 1 * 60 + 33),
+                expires=Date(2019, 2, 5)),
+            nutrition=NutritionInformation(calories=270)),
+                   default=utils.default))
     pass

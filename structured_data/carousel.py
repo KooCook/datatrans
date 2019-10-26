@@ -184,4 +184,12 @@ class ListItem(Thing):
 
 
 if __name__ == '__main__':
+    urls = [
+        'http://example.com/coffee_cake.html',
+        'http://example.com/apple_pie.html',
+        'http://example.com/blueberry-pie.html',
+    ]
+
+    print(ItemListOrderType.ItemListOrderDescending)
+    print(ItemList(*urls))
     pass

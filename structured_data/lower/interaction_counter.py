@@ -26,4 +26,10 @@ class InteractionCounter(Thing):
 
 
 if __name__ == '__main__':
+    import json
+    from structured_data import utils
+
+    print(json.dumps(InteractionCounter(
+        interactionType=Action.WatchAction, userInteractionCount=125
+    ), default=utils.default))
     pass

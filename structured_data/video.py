@@ -92,4 +92,22 @@ class VideoObject(Thing):
 
 
 if __name__ == '__main__':
+    import json
+    from structured_data import utils
+    from structured_data.lower.action import Action
+
+    print(json.dumps(VideoObject(
+        name='Introducing the self-driving bicycle in the Netherlands',
+        description='This spring, Google is introducing the self-driving bicycle in Amsterdam, the world’s premier cycling city. The Dutch cycle more than any other nation in the world, almost 900 kilometres per year per person, amounting to over 15 billion kilometres annually. The self-driving bicycle enables safe navigation through the city for Amsterdam residents, and furthers Google’s ambition to improve urban mobility with technology. Google Netherlands takes enormous pride in the fact that a Dutch team worked on this innovation that will have great impact in their home country.',
+        thumbnailUrl=[("https://example.com/photos/1x1/photo.jpg"),
+                      ("https://example.com/photos/4x3/photo.jpg"),
+                      ("https://example.com/photos/16x9/photo.jpg")],
+        uploadDate=Date(2016, 3, 31),
+        contentUrl='https://www.example.com/video/self-driving-bicycle/file.mp4',
+        embedUrl='https://www.example.com/embed/123',
+        interactionStatistic=InteractionCounter(
+            userInteractionCount=567018,
+            interactionType=Action.WatchAction
+        )
+    ), default=utils.default))
     pass

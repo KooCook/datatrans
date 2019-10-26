@@ -65,4 +65,10 @@ class DateTime(_datetime.datetime):
 
 
 if __name__ == '__main__':
+    import json
+    from structured_data import utils
+
+    print(json.dumps(Date(2018, 3, 10), default=utils.default))
+    print(json.dumps(Time(0, 20, 0), default=utils.default))
+    print(json.dumps(DateTime(2000, 3, 10, 12, 5), default=utils.default))
     pass
