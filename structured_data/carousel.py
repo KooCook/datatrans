@@ -34,7 +34,7 @@ There are two ways to implement a list format for your structured data:
 import enum
 from typing import Optional
 
-from structured_data.base import Property, Thing, Integer, URL
+from structured_data.base import URL, Integer, Property, Thing
 
 
 class ItemListOrderType(enum.Enum):

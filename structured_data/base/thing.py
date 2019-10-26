@@ -1,6 +1,6 @@
-from typing import List
 import abc
 import json
+from typing import List
 
 from structured_data import utils
 
