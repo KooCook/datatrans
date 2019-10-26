@@ -18,7 +18,7 @@ class Thing(metaclass=abc.ABCMeta):
     def json_serial(self):
         properties = {'@type': self.type}
         for k, v in self.__dict__.items():
-            if utils.snake_to_camel(k) in self.PROPERTIES:
+            if utils.snake_to_camel(k) in self.PROPERTIES and v is not None:
                 properties[utils.snake_to_camel(k)] = v
         return properties
 
