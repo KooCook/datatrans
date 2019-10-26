@@ -31,17 +31,19 @@ There are two ways to implement a list format for your structured data:
     The page should contain user-visible text and an anchor to match
     each ``ListItem`` element.
 """
-from typing import List, Optional
 import enum
+from typing import Optional
 
-from structured_data.base.data_type import Integer, URL
-from structured_data.base.thing import Thing
+from structured_data.base import Property, Thing, Integer, URL
 
 
-class ItemLIstOrderType(enum.Enum):
+class ItemListOrderType(enum.Enum):
     ItemListOrderAscending = 'http://schema.org/ItemListOrderAscending'
     ItemListOrderDescending = 'https://schema.org/ItemListOrderDescending'
     ItemListUnordered = 'https://schema.org/ItemListUnordered'
+
+    def json_serial(self):
+        return self._value_
 
 
 class ItemList(Thing):
@@ -62,57 +64,50 @@ class ItemList(Thing):
             See ``ListItem`` for details.
     """
 
-    def __init__(self, *args, **kwargs):
-        self._item_list_element: List[ListItem] = []
+    PROPERTIES = (
+        # required
+        'itemListElement',
+        # optional
+        'itemListOrder',
+        'numberOfItems',
+    )
+
+    def __init__(self, *args,
+                 itemListOrder: ItemListOrderType = ItemListOrderType.
+                 ItemListOrderDescending, **kwargs):
+        self._item_list_element: Property[ListItem] = Property()
         for item in args:
             if not isinstance(item, ListItem):
                 item = ListItem(item, position=self.numberOfItems + 1)
             self._item_list_element.append(item)
 
-        self._item_list_order: Optional[ItemLIstOrderType] = kwargs.pop(
-            'ItemLIstOrder', ItemLIstOrderType.ItemListOrderDescending)
+        self._item_list_order: ItemListOrderType = itemListOrder
 
-        if not self.has_one_type_of_item():
-            raise ValueError('More than 1 type of item')
+        try:
+            if not self.has_one_type_of_item():
+                raise ValueError('More than 1 type of item')
+        except AttributeError:
+            pass
+
+        self._number_of_items = self.numberOfItems
 
     def has_one_type_of_item(self) -> bool:
-        return len(set(listitem.item.__class__.__name__
-                       for listitem in self._item_list_element)) == 1
-
-    def get_json_ld(self, top_level: bool = False) -> str:
-        if top_level:
-            return '{{{}}}'.format(','.join((
-                Thing.get_context(),
-                self.get_type_specification(),
-                self.get_str_item_list_element(),
-            )))
-        return '{{{}}}'.format(','.join((
-            self.get_type_specification(),
-            self.get_str_item_list_element(),
-        )))
-
-    def __str__(self):
-        return self.get_json_ld()
-
-    def get_str_item_list_element(self) -> str:
-        return '"itemListElement":{}'.format(self._item_list_element)
-
-    def get_str_item_list_order(self) -> str:
-        if self._item_list_order is not None:
-            return '"itemListOrder":{}'.format(self._item_list_order)
-        return ''
-
-    def get_str_number_of_items(self) -> str:
-        return '"numberOfItems":{}'.format(self.numberOfItems)
+        if hasattr(self, 'item'):
+            return len(set(listitem.item.__class__.__name__
+                           for listitem in self._item_list_element)) == 1
+        raise AttributeError(repr(self) + ' has no attribute \'item\'')
 
     def sort(self) -> None:
-        if self.itemListOrder != ItemLIstOrderType.ItemListUnordered:
+        if self._item_list_order is not ItemListOrderType.ItemListUnordered:
             def get_position(listitem: ListItem):
                 return listitem.position
-            self._item_list_element.sort(key=get_position, reverse={
-                ItemLIstOrderType.ItemListOrderAscending: True,
-                ItemLIstOrderType.ItemListOrderDescending: False,
-            }[self.itemListOrder])
+
+            self._item_list_element.sort(
+                key=get_position,
+                reverse={
+                    ItemListOrderType.ItemListOrderAscending: True,
+                    ItemListOrderType.ItemListOrderDescending: False,
+                }[self._item_list_order])
         else:
             raise ValueError('cannot sort ItemListUnordered')
 
@@ -120,31 +115,6 @@ class ItemList(Thing):
         if not isinstance(item, ListItem):
             item = ListItem(item, position=self.numberOfItems + 1)
         self._item_list_element.append(item)
-
-
-    @property
-    def itemListElement(self) -> List['ListItem']:
-        return self._get_item_list_element()
-
-    def _get_item_list_element(self) -> List['ListItem']:
-        return self._item_list_element
-
-    @property
-    def itemListOrder(self) -> ItemLIstOrderType:
-        return self._get_item_list_order()
-
-    @itemListOrder.setter
-    def itemListOrder(self, item_list_order: ItemLIstOrderType):
-        self._set_item_list_order(item_list_order)
-
-    def _get_item_list_order(self) -> ItemLIstOrderType:
-        return self._item_list_order
-
-    def _set_item_list_order(self, new_item_list_order: ItemLIstOrderType):
-        if isinstance(new_item_list_order, ItemLIstOrderType):
-            self._item_list_order = new_item_list_order
-            return
-        raise TypeError('itemListOrder should be \'ItemLIstOrderType\'')
 
     @property
     def numberOfItems(self) -> Integer:
@@ -195,77 +165,22 @@ class ListItem(Thing):
         position: Integer
             The item's position in the carousel. This is a 1-based number.
     """
-    def __init__(self, arg, *, position):
-        self._position = position
+
+    PROPERTIES = (
+        # required
+        'position',
+        # all-in-one page only
+        'item',
+        # summary page only
+        'url',
+    )
+
+    def __init__(self, arg, *, position: Integer):
+        self.position = position
         if URL.is_url(arg):
-            self._url: Optional[URL] = arg
-            self._item: Optional[Thing] = None
+            self.url: Optional[URL] = URL(arg)
         else:
-            self._item: Optional[Thing] = arg
-            self._url: Optional[URL] = None
-
-    def get_json_ld(self, top_level: bool = False) -> str:
-        assert not top_level, '\'ListItem cannot be top level\''
-        if self._url is not None:
-            assert self._item is None
-            return '{{{}}}'.format(','.join((
-                self.get_type_specification(),
-                self.get_str_position(),
-                self.get_str_url(),
-            )))
-        return '{{{}}}'.format(','.join((
-            self.get_type_specification(),
-            self.get_str_position(),
-            self.get_str_item(),
-        )))
-
-    def __str__(self):
-        return self.get_json_ld()
-
-    def __repr__(self):
-        return self.get_json_ld()
-
-    def get_str_position(self) -> str:
-        return '"position":{}'.format(self.position)
-
-    def get_str_url(self) -> str:
-        if self._url is not None:
-            return '"url":"{}"'.format(self.url)
-        raise AttributeError('This ListItem has no url')
-
-    def get_str_item(self) -> str:
-        if self._item is not None:
-            return '"item":{}'.format(self.item)
-        raise AttributeError('This ListItem has no item')
-
-    @property
-    def item(self):
-        return self._get_item()
-
-    def _get_item(self):
-        return self._item
-
-    @property
-    def position(self):
-        return self._get_position()
-
-    def _get_position(self):
-        return self._position
-
-    @property
-    def url(self):
-        return self._get_url()
-
-    # @url.setter
-    # def url(self, new_url: URL):
-    #     self._set_url(new_url)
-
-    def _get_url(self):
-        return self._url
-
-    # def _set_url(self, new_url: URL):
-    #     if URL.is_url(new_url):
-    #         self._url = new_url
+            self.item: Optional[Thing] = arg
 
 
 if __name__ == '__main__':
