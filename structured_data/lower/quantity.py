@@ -18,7 +18,10 @@ class Distance:
         self._unit = unit
 
     def __str__(self):
-        return '{} {}'.format(self._value, self._unit)
+        return '{} {}'.format(self._value, self._unit.value)
+
+    def json_serial(self):
+        return self.__str__()
 
 
 class Duration(datetime.timedelta):
@@ -53,7 +56,7 @@ class Duration(datetime.timedelta):
 
 
 class EnergyUnit(enum.Enum):
-    calories = 'calories'
+    CALORIE = 'calories'
 
 
 class Energy:
@@ -66,7 +69,10 @@ class Energy:
         self._unit = unit
 
     def __str__(self):
-        return '{} {}'.format(self._value, self._unit)
+        return '{} {}'.format(self._value, self._unit.value)
+
+    def json_serial(self):
+        return self.__str__()
 
 
 class MassUnit(enum.Enum):
@@ -85,8 +91,15 @@ class Mass:
         self._unit = unit
 
     def __str__(self):
-        return '{} {}'.format(self._value, self._unit)
+        return '{} {}'.format(self._value, self._unit.value)
+
+    def json_serial(self):
+        return self.__str__()
 
 
 if __name__ == '__main__':
+    import json
+    from structured_data import utils
+
+    print(json.dumps(Duration(minutes=20), default=utils.default))
     pass
