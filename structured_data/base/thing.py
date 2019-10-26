@@ -47,8 +47,11 @@ class Property(list, List):
     """
     Represents a JSON-LD property.
     """
-    def __init__(self, *args):
-        super().__init__(args)
+    def __init__(self, *args, class_=None):
+        if class_ is not None:
+            super().__init__(map(class_, args))
+        else:
+            super().__init__(args)
 
     def __repr__(self):
         if self.__len__() == 0:
