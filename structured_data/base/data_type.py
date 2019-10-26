@@ -11,6 +11,11 @@ Text = str
 
 class URL(Text):
 
+    def __init__(self, *args):
+        if not self.is_url(self):
+            raise ValueError('not a valid URL')
+        super().__init__()
+
     @staticmethod
     def is_url(x):
         try:
