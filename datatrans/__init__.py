@@ -16,7 +16,7 @@ class DataSet(enum.Enum):
 
 
 if __name__ == '__main__':
-    data_set = DataSet.EPICURIOUS
+    data_set = DataSet.COOKSTR
 
     with Path(data_set.value).open('r', encoding='utf-8') as jsonfile:
         counter = 1
@@ -60,6 +60,7 @@ if __name__ == '__main__':
                         d['recipeCuisine'] = data['tag']['name']
                 except KeyError as e:
                     warnings.warn('KeyError: {} in line#{}'.format(e, counter))
+            ###########
             elif data_set is DataSet.ALLRECIPES:
                 d = {
                     'author': schema.Person(data['author']),
@@ -78,6 +79,7 @@ if __name__ == '__main__':
                         ratingValue=data['rating_stars'],
                         reviewCount=data['review_count']
                     )
+            ###########
             elif data_set is DataSet.BBCCOUK:
                 d = {
                     'author': schema.Person(data['chef']),
@@ -96,15 +98,17 @@ if __name__ == '__main__':
 
                 # TODO: Also include serving size 'serve' into the data
 
+            ###########
             elif data_set is DataSet.COOKSTR:
                 d = {
-                    'author': schema.Person(data['chef']),
                     'cookingMethod': data['cooking_method'],
                     'datePublished': data['date_modified'],
                     'recipeIngredient': schema.Property(*data['ingredients']),
                     'recipeInstructions': schema.Property(*data['instructions']),
                     'name': data['title']
                 }
+                if data['chef']:
+                    d['author'] = schema.Person(data['chef'])
                 if data['description']:
                     d['description'] = data['description']
                 if data['rating_count']:
@@ -123,7 +127,7 @@ if __name__ == '__main__':
             # if counter > 10:
             #     break
 
-    with open(BASE_DIR / 'assets/epicurious-recipes.json-ld', 'w') as jsonfile:
+    with open(BASE_DIR / 'assets/cookstr-recipes.json-ld', 'w') as jsonfile:
         for recipe in recipes:
             jsonfile.write(json.dumps(recipe, default=schema.utils.default))
             jsonfile.write('\n')
