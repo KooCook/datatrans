@@ -50,7 +50,7 @@ class Time(_datetime.time):
         return self.isoformat()
 
 
-class DateTime(_datetime.datetime):
+class DateTime(_datetime.datetime, Date):
     """
     Represents ``DateTime``.
     Adds JSON support to Python Standard Library ``datetime.DateTime``
@@ -67,6 +67,10 @@ class DateTime(_datetime.datetime):
 
     def json_serial(self):
         return self.isoformat()
+
+    @classmethod
+    def fromisoformat(cls, date_string: str) -> 'DateTime':
+        return super().fromisoformat(date_string.replace('Z', '+00:00'))
 
 
 if __name__ == '__main__':
