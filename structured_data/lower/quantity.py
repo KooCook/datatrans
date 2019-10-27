@@ -101,5 +101,5 @@ if __name__ == '__main__':
     import json
     from structured_data import utils
 
-    print(json.dumps(Duration(minutes=20), default=utils.default))
+    print(json.dumps(Duration(minutes=120), default=utils.default))
     pass

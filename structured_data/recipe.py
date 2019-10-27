@@ -303,7 +303,7 @@ if __name__ == '__main__':
             datePublished=Date(2018, 3, 10),
             description="This coffee cake is awesome and perfect for parties.",
             prepTime=Duration(0, 20 * 60),
-            cookTime=Duration(0, 30 * 60),
+            # cookTime=Duration(0, 30 * 60),
             totalTime=Duration(0, 50 * 60),
             keywords="cake for a party, coffee",
             recipeYield='10 servings',

@@ -60,6 +60,8 @@ class Property(list, List):
             return super().__repr__()[1:-1]
         return super().__repr__()
 
+    # TODO: Fix JSONEncoder (list of 1 item should be change to the item itself)
+
 
 if __name__ == '__main__':
     from structured_data.base.data_type import Text

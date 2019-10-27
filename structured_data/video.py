@@ -95,6 +95,7 @@ if __name__ == '__main__':
     import json
     from structured_data import utils
     from structured_data.lower.action import Action
+    from structured_data.base import DateTime
 
     print(json.dumps(VideoObject(
         name='Introducing the self-driving bicycle in the Netherlands',
@@ -102,7 +103,7 @@ if __name__ == '__main__':
         thumbnailUrl=[("https://example.com/photos/1x1/photo.jpg"),
                       ("https://example.com/photos/4x3/photo.jpg"),
                       ("https://example.com/photos/16x9/photo.jpg")],
-        uploadDate=Date(2016, 3, 31),
+        uploadDate=DateTime(2016, 3, 31),
         contentUrl='https://www.example.com/video/self-driving-bicycle/file.mp4',
         embedUrl='https://www.example.com/embed/123',
         interactionStatistic=InteractionCounter(
