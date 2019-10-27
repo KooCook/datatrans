@@ -223,6 +223,8 @@ class Recipe(Thing):
         'recipeInstructions',
         'aggregateRating',
         'video',
+        # optional
+        'cookingMethod',
     )
 
     def __init__(
@@ -278,6 +280,7 @@ class Recipe(Thing):
         self._recipe_yield = recipeYield
         self._total_time = totalTime
         self._video = video
+        self._cooking_method = kwargs.pop('cookingMethod', None)
 
 
 if __name__ == '__main__':
