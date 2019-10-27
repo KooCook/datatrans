@@ -106,3 +106,6 @@ venv.bak/
 # IDE configuration
 .vscode/
 .idea/
+
+# assets folder (too large + contains output)
+assets/
