@@ -1,6 +1,7 @@
 import enum
 import json
 from pathlib import Path
+import warnings
 
 import structured_data as schema
 from datatrans.utils import BASE_DIR
@@ -15,10 +16,10 @@ class DataSet(enum.Enum):
 
 
 if __name__ == '__main__':
-    data_set = DataSet.COOKSTR
+    data_set = DataSet.EPICURIOUS
 
     with Path(data_set.value).open('r', encoding='utf-8') as jsonfile:
-        counter = 0
+        counter = 1
         recipes = []
         for line in jsonfile:
             data = json.loads(line)
@@ -31,13 +32,34 @@ if __name__ == '__main__':
                     'aggregateRating': schema.AggregateRating(
                         ratingValue=data['aggregateRating'],
                         reviewCount=data['reviewsCount']
-                    ),
-                    'recipeIngredient': schema.Property(*data['ingredients']),
-                    'recipeCuisine': data['tag']['name']
+                    )
                 }
+
+                if data['reviewsCount'] != 0:
+                    d['aggregateRating'] = schema.AggregateRating(
+                        ratingValue=data['aggregateRating'],
+                        reviewCount=data['reviewsCount']
+                    )
+
                 if data['author']:
                     d['author'] = schema.Property(*[schema.Person(author['name'])
                                                     for author in data['author']])
+
+                try:
+                    d['recipeIngredient'] = schema.Property(*data['ingredients'])
+                except KeyError as e:
+                    warnings.warn('KeyError: {} in line#{}'.format(e, counter))
+                    try:
+                        if data['tag']['category'] == 'ingredient':
+                            d['recipeIngredient'] = data['tag']['name']
+                    except KeyError as e:
+                        warnings.warn('KeyError: {} in line#{}'.format(e, counter))
+
+                try:
+                    if data['tag']['category'] == 'cuisine':
+                        d['recipeCuisine'] = data['tag']['name']
+                except KeyError as e:
+                    warnings.warn('KeyError: {} in line#{}'.format(e, counter))
             elif data_set is DataSet.ALLRECIPES:
                 d = {
                     'author': schema.Person(data['author']),
@@ -98,12 +120,12 @@ if __name__ == '__main__':
 
             recipes.append(recipe)
             counter += 1
-            if counter > 10:
-                break
+            # if counter > 10:
+            #     break
 
-    with open(BASE_DIR / 'assets/out.json-ld', 'w') as jsonfile:
+    with open(BASE_DIR / 'assets/epicurious-recipes.json-ld', 'w') as jsonfile:
         for recipe in recipes:
             jsonfile.write(json.dumps(recipe, default=schema.utils.default))
             jsonfile.write('\n')
 
-    print(json.dumps(recipes, default=schema.utils.default))
+    # print(json.dumps(recipes, default=schema.utils.default))
