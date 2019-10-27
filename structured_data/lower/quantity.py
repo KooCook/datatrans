@@ -49,7 +49,7 @@ class Duration(datetime.timedelta):
             '{}M'.format(minutes) if minutes else '',
             '{}S'.format(seconds) if seconds else ''
         )
-        return 'P{}{}' .format(day, time) if day or time else 'P0D'
+        return 'P{}{}' .format(day, time) if day or time != 'T' else 'P0D'
 
     def json_serial(self):
         return self.iso_format()
