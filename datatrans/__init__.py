@@ -4,7 +4,7 @@ from pathlib import Path
 import warnings
 
 import structured_data as schema
-from datatrans.utils import BASE_DIR
+from utils import BASE_DIR
 
 
 @enum.unique
