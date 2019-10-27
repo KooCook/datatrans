@@ -2,6 +2,7 @@
 https://developers.google.com/search/docs/data-types/recipe
 """
 from typing import Iterable, Optional, Union
+import warnings
 
 from structured_data.base import URL, Date, Number, Property, Text, Thing
 from structured_data.lower.quantity import Duration, Energy, EnergyUnit
@@ -227,8 +228,8 @@ class Recipe(Thing):
     def __init__(
             self,
             *,
-            image: Iterable[Union[URL, str]],
-            name: Text,
+            image: Iterable[Union[URL, str]] = None,
+            name: Text = None,
             aggregateRating: Optional[AggregateRating] = None,
             author: Optional[Person] = None,
             cookTime: Optional[Duration] = None,
@@ -245,9 +246,23 @@ class Recipe(Thing):
             totalTime: Optional[Duration] = None,
             video: Optional[VideoObject] = None,
             **kwargs):
-        self._image: Property[URL] = Property(*image, class_=URL)
-        self._name: Text = name
-        self.name: Text = name
+        suppress = kwargs.pop('suppress', False)
+        if image is None:
+            self._image = None
+            if suppress:
+                warnings.warn('Warning: required property \'image\' unfilled')
+            else:
+                raise ValueError('required property \'image\' unfilled')
+        else:
+            self._image: Property[URL] = Property(*image, class_=URL)
+        if name is None:
+            self._name = None
+            if suppress:
+                warnings.warn('Warning: required property \'name\' unfilled')
+            else:
+                raise ValueError('required property \'name\' unfilled')
+        else:
+            self._name: Text = name
         self._aggregate_rating = aggregateRating
         self._author = author
         self._cook_time = cookTime
