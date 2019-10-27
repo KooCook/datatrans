@@ -46,11 +46,10 @@ if __name__ == '__main__':
                     'recipeInstructions': schema.Property(*data['instructions']),
                     'name': data['title']
                 }
-                if data['prep_time_minutes']:
+                if data['prep_time_minutes'] != 0 or data['cook_time_minutes'] != 0:
                     d['prepTime'] = schema.Duration(minutes=data['prep_time_minutes'])
-                if data['cook_time_minutes']:
                     d['cookTime'] = schema.Duration(minutes=data['cook_time_minutes'])
-                if data['total_time_minutes']:
+                if data['total_time_minutes'] != 0:
                     d['totalTime'] = schema.Duration(minutes=data['total_time_minutes'])
                 if data['review_count']:
                     d['aggregateRating'] = schema.AggregateRating(
@@ -68,11 +67,10 @@ if __name__ == '__main__':
                 }
                 if data['description']:
                     d['description'] = data['description']
-                if data['preparation_time_minutes']:
+                if data['preparation_time_minutes'] != 0 or data['cooking_time_minutes'] != 0:
                     d['prepTime'] = schema.Duration(minutes=data['preparation_time_minutes'])
-                if data['cooking_time_minutes']:
                     d['cookTime'] = schema.Duration(minutes=data['cooking_time_minutes'])
-                if data['total_time_minutes']:
+                if data['total_time_minutes'] != 0:
                     d['totalTime'] = schema.Duration(minutes=data['total_time_minutes'])
 
                 # TODO: Also include serving size 'serve' into the data
