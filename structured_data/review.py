@@ -71,14 +71,14 @@ class AggregateRating(Thing):
     )
 
     def __init__(self, *, itemReviewed: Thing = None, ratingValue: Number,
-                 ratingCount: Number = None, ReviewCount = None, **kwargs):
+                 ratingCount: Number = None, reviewCount = None, **kwargs):
         self._item_reviewed = itemReviewed
         self._rating_value = ratingValue
-        if ratingCount is None and ReviewCount is None:
+        if ratingCount is None and reviewCount is None:
             raise ValueError('At least one of \'ratingCount\' or \'reviewCount\''
                              ' is required.')
         self._rating_count = ratingCount
-        self._review_count = ReviewCount
+        self._review_count = reviewCount
         self._best_rating = kwargs.pop('bestRating', None)  # assumed to be 5
         self._worst_rating = kwargs.pop('worstRating', None)  # assumed to be 1
 
