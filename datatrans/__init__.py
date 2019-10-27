@@ -59,7 +59,6 @@ if __name__ == '__main__':
             elif data_set is DataSet.BBCCOUK:
                 d = {
                     'author': schema.Person(data['chef']),
-                    'cookTime': schema.Duration(minutes=data['cooking_time_minutes']),
                     'recipeIngredient': schema.Property(*data['ingredients']),
                     'recipeInstructions': schema.Property(*data['instructions']),
                     'name': data['title']
