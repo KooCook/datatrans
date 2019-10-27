@@ -15,7 +15,7 @@ class DataSet(enum.Enum):
 
 
 if __name__ == '__main__':
-    data_set = DataSet.BBCCOUK
+    data_set = DataSet.COOKSTR
 
     with Path(data_set.value).open('r', encoding='utf-8') as jsonfile:
         counter = 0
@@ -55,7 +55,7 @@ if __name__ == '__main__':
                     d['aggregateRating'] = schema.AggregateRating(
                         ratingValue=data['rating_stars'],
                         reviewCount=data['review_count']
-                    ),
+                    )
             elif data_set is DataSet.BBCCOUK:
                 d = {
                     'author': schema.Person(data['chef']),
@@ -75,7 +75,21 @@ if __name__ == '__main__':
                 # TODO: Also include serving size 'serve' into the data
 
             elif data_set is DataSet.COOKSTR:
-                pass
+                d = {
+                    'author': schema.Person(data['chef']),
+                    'cookingMethod': data['cooking_method'],
+                    'datePublished': data['date_modified'],
+                    'recipeIngredient': schema.Property(*data['ingredients']),
+                    'recipeInstructions': schema.Property(*data['instructions']),
+                    'name': data['title']
+                }
+                if data['description']:
+                    d['description'] = data['description']
+                if data['rating_count']:
+                    d['aggregateRating'] = schema.AggregateRating(
+                        ratingValue=data['rating_value'],
+                        ratingCount=data['rating_count']
+                    )
 
             recipe = schema.Recipe(
                 **d,
