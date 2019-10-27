@@ -42,7 +42,7 @@ class Duration(datetime.timedelta):
         """
         day = '{}D'.format(self.days) if self.days else ''
         hours = self.seconds // 3600
-        minutes = (self.seconds % 3660) // 60
+        minutes = (self.seconds % 3600) // 60
         seconds = self.seconds % 60
         time = 'T{}{}{}'.format(
             '{}H'.format(hours) if hours else '',
