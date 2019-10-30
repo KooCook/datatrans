@@ -1,5 +1,4 @@
-"""
-https://developers.google.com/search/docs/data-types/carousel
+"""Objects taken from Google's guide about ``Carousel``
 
 In addition to the standard structured data guidelines, the following
 guidelines apply to all list markup:
@@ -30,6 +29,9 @@ There are two ways to implement a list format for your structured data:
     schema.org element type (for example, ``Movie`` or ``Course``).
     The page should contain user-visible text and an anchor to match
     each ``ListItem`` element.
+
+References:
+    https://developers.google.com/search/docs/data-types/carousel
 """
 import enum
 from typing import Optional
@@ -47,7 +49,8 @@ class ItemListOrderType(enum.Enum):
 
 
 class ItemList(Thing):
-    """
+    """Schema.org's ItemList, as specified by Google
+
     `ItemList` is the container item that holds all elements in the
     list. If used on a summary page, all URLs in the list must point to
     different pages on the same domain. If used on an all-in-one-page
@@ -125,7 +128,8 @@ class ItemList(Thing):
 
 
 class ListItem(Thing):
-    """
+    """Schema.org's ListItem, as specified by Google
+
     `ListItem` contains details about an individual item in the list.
       - If this is a **summary page**, the `ListItem` should include
         only the `type`, `position`, and `url` properties.

@@ -3,12 +3,14 @@ from structured_data.lower.action import Action
 
 
 class InteractionCounter(Thing):
-    """
+    """Schema.org's InteractionCounter
+
     A summary of how users have interacted with this CreativeWork. In
     most cases, authors will use a subtype to specify the specific type
     of interaction.
 
-    https://schema.org/InteractionCounter
+    References:
+        https://schema.org/InteractionCounter
     """
     PROPERTIES = (
         # required

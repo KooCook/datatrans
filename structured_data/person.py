@@ -1,5 +1,7 @@
 """
-https://schema.org/Person
+
+References:
+    https://schema.org/Person
 """
 from structured_data.base import Text, Thing
 

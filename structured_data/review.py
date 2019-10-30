@@ -2,7 +2,8 @@ from structured_data.base import Thing, Number
 
 
 class AggregateRating(Thing):
-    """
+    """Schemaa.org's AggregateRating, as specified by Google
+
     Required properties:
         itemReviewed: Thing
             The item that is being rated. However, if the aggregate
@@ -57,7 +58,8 @@ class AggregateRating(Thing):
             system is not a 5-point scale. If ``worstRating`` is
             omitted, 1 is assumed.
 
-    http://schema.org/AggregateRating.
+    References:
+        http://schema.org/AggregateRating.
     """
     PROPERTIES = (
         # required

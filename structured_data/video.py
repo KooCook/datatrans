@@ -9,7 +9,8 @@ from structured_data.lower.quantity import Duration
 
 
 class VideoObject(Thing):
-    """
+    """Schema.org's VideoObject, as specified by Google
+
     Required properties:
         description: Text
             The description of the video. HTML tags are ignored.

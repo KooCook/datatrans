@@ -1,5 +1,7 @@
 """
-https://developers.google.com/search/docs/data-types/recipe
+
+References:
+    https://developers.google.com/search/docs/data-types/recipe
 """
 from typing import Iterable, Optional, Union
 import warnings
@@ -12,8 +14,7 @@ from structured_data.video import VideoObject
 
 
 class NutritionInformation(Thing):
-    """
-    Nutritional information about the recipe
+    """Nutritional information about the recipe
 
     Required properties:
         calories: Energy
@@ -43,7 +44,8 @@ class NutritionInformation(Thing):
         unsaturatedFatContent: Mass
             The number of grams of unsaturated fat.
 
-    https://schema.org/NutritionInformation
+    References:
+        https://schema.org/NutritionInformation
     """
 
     PROPERTIES = (
@@ -70,7 +72,8 @@ class NutritionInformation(Thing):
 
 
 class Recipe(Thing):
-    """
+    """Schema.org's Recipe, as specified by Google
+
     Required properties:
         image: URL, ImageObject
             Image of the completed dish.

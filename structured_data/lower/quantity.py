@@ -9,7 +9,8 @@ class LengthUnit(enum.Enum):
 
 
 class Distance:
-    """
+    """Schema.org's Distance
+
     Properties that take Distances as values are of the form
     '<Number> <Length unit of measure>'. E.g., '7 ft'.
     """
@@ -25,11 +26,13 @@ class Distance:
 
 
 class Duration(datetime.timedelta):
-    """
+    """Schema.org's Duration
+
     Represents ``Duration``.
     Adds JSON support to Python Standard Library ``datetime.timedelta``
 
-    https://en.wikipedia.org/wiki/ISO_8601#Durations
+    References:
+        https://en.wikipedia.org/wiki/ISO_8601#Durations
     """
 
     def __str__(self):
@@ -60,7 +63,8 @@ class EnergyUnit(enum.Enum):
 
 
 class Energy:
-    """
+    """Schema.org's Energy
+
     Properties that take Energy as values are of the form
     <Number> <Energy unit of measure>'.
     """
@@ -82,7 +86,8 @@ class MassUnit(enum.Enum):
 
 
 class Mass:
-    """
+    """Schema.org's Mass
+
     Properties that take Mass as values are of the form
     '<Number> <Mass unit of measure>'. E.g., '7 kg'.
     """
