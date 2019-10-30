@@ -1,3 +1,8 @@
+"""
+
+References:
+    https://fdc.nal.usda.gov/api-guide.html#food-search-endpoint
+"""
 import datetime
 import enum
 from typing import Dict, List
@@ -55,7 +60,7 @@ class FoodSearchCriteria:
             page_number: int = None,
             sort_field: SortField = None,
             sort_direction: SortDirection = None,
-            *, _dict_: Dict = None):
+            *, _dict_: dict = None):
         """Create a FoodData Central criteria.
 
         Args:
@@ -71,22 +76,25 @@ class FoodSearchCriteria:
                 continue
             if v is not None:
                 _dict_[utils.snake_to_camel(k)] = v
-            elif not hasattr(_dict_, utils.snake_to_camel(k)):
-                _dict_[utils.snake_to_camel(k)] = None
 
-        self.general_search_input: str = _dict_['generalSearchInput']
-        self.included_data_types: Dict[str, bool] = _dict_['includedDataTypes']
-        self.ingredients: str = _dict_['ingredients']
-        self.brand_owner: str = _dict_['brandOwner']
-        self.require_all_words: bool = _dict_['requireAllWords']
-        self.page_number: int = _dict_['pageNumber']
-        self.sort_field: SortField = _dict_['sortField']
-        self.sort_direction: SortDirection = _dict_['sortDirection']
+        self.general_search_input: str = _dict_.pop('generalSearchInput', None)
+        self.included_data_types: Dict[str, bool] = _dict_.pop('includedDataTypes', None)
+        self.ingredients: str = _dict_.pop('ingredients', None)
+        self.brand_owner: str = _dict_.pop('brandOwner', None)
+        self.require_all_words: bool = _dict_.pop('requireAllWords', None)
+        self.page_number: int = _dict_.pop('pageNumber', None)
+        self.sort_field: SortField = SortField(_dict_.pop('sortField', None))
+        self.sort_direction: SortDirection = SortDirection(_dict_.pop('sortDirection', None))
 
-    def dict(self):
+        if len(_dict_) != 0:
+            import warnings
+            warnings.warn('\'_dict_\' has left-over keys: {}'.format(_dict_))
+
+    def dict(self) -> dict:
         """ Returns a dict with fields in camelCase. """
         return {utils.snake_to_camel(field): getattr(self, field)
-                for field in self.__slots__}
+                for field in self.__slots__
+                if getattr(self, field) is not None}
 
     def items(self):
         return self.dict().items()
@@ -106,16 +114,20 @@ class Food:
     """Represents a minimal food object returned by FoodData Search endpoint.
 
     Attributes:
-        fdc_id:
-        description:
-        data_type:
-        published_date:
-        all_highlight_fields:
-        score:
-        additional_descriptions:
-        food_code:
-        gtin_upc:
-        brand_owner:
+        fdc_id: Unique ID of the food.
+        description: The description of the food.
+        # scientific_name: Optional. The scientific name of the food.
+        # common_names: Optional. Any other common names for the food.
+        additional_descriptions: Optional. Any additional descriptions of the food.
+        data_type: The type of the food data.
+        food_code: Any A unique ID identifying the food within FNDDS.
+        gtin_upc: GTIN or UPC code identifying the food.
+        # ndb_number: Unique number assigned for foundation foods.
+        published_date: Date the item was published to FDC.
+        brand_owner: Brand owner for the food.
+        # ingredients: The list of ingredients (as it appears on the product label).
+        all_highlight_fields: Fields that were found matching the criteria.
+        score: Relative score indicating how well the food matches the search criteria.
     """
     __slots__ = (
         # always
@@ -125,17 +137,21 @@ class Food:
         'published_date',
         'all_highlight_fields',
         'score',
-        # optional
-        'additional_descriptions',
         # Survey only
         'food_code',
         # Branded only
         'gtin_upc',
         'brand_owner',
+        # optional
+        # 'scientific_name',
+        # 'common_names',
+        'additional_descriptions',
+        # 'ndb_number'
+        # 'ingredients',
     )
 
     def __init__(self, *, _dict_: dict):
-        """Create a Food data class.
+        """Create a minimal Food data class.
 
         Args:
             _dict_: A dict with fields in camelCase to base creation on
@@ -149,40 +165,37 @@ class Food:
                 continue
             if v is not None:
                 _dict_[utils.snake_to_camel(k)] = v
-            elif not hasattr(_dict_, utils.snake_to_camel(k)):
-                _dict_[utils.snake_to_camel(k)] = None
 
-        self.fdc_id: int = _dict_['fcdId']
-        self.description: str = _dict_['description']
-        self.data_type: FoodDataType = _dict_['dataType']
-        self.published_date: datetime.date = _dict_['publishedDate']
-        self.all_highlight_fields: str = _dict_['allHighlightFields']
-        self.score: float = _dict_['score']
+        self.fdc_id: int = _dict_.pop('fcdId', None)
+        self.description: str = _dict_.pop('description', None)
+        self.data_type: FoodDataType = FoodDataType(_dict_.pop('dataType', None))
+        self.published_date: datetime.date = datetime.date.fromisoformat(_dict_.pop('publishedDate', None))
+        self.all_highlight_fields: str = _dict_.pop('allHighlightFields', None)
+        self.score: float = _dict_.pop('score', None)
         # optional
-        self.additional_descriptions: str = _dict_['additionalDescriptions']
+        self.additional_descriptions: str = _dict_.pop('additionalDescriptions', None)
         # Survey only
-        self.food_code: str = _dict_['foodCode']  # not sure
+        self.food_code: str = _dict_.pop('foodCode', None)  # not sure
         # Branded only
-        self.gtin_upc: str = _dict_['gtinUpc']  # can have 0 in front
-        self.brand_owner: str = _dict_['brandOwner']
+        self.gtin_upc: str = _dict_.pop('gtinUpc', None)  # can have 0 in front
+        self.brand_owner: str = _dict_.pop('brandOwner', None)
 
-    def dict(self):
+        if len(_dict_) != 0:
+            import warnings
+            warnings.warn('\'_dict_\' has left-over keys: {}'.format(_dict_))
+
+    def dict(self) -> dict:
         """ Returns a dict with fields in camelCase. """
-        _dict_ = {utils.snake_to_camel(field): getattr(self, field)
-                  for field in self.__slots__[:-3]}
-        if self.data_type is FoodDataType.SURVEY:
-            _dict_['foodCode'] = self.food_code
-        elif self.data_type is FoodDataType.BRANDED:
-            _dict_['dtinUpc'] = self.gtin_upc
-            _dict_['brandOwner'] = self.brand_owner
-        return _dict_
+        return {utils.snake_to_camel(field): getattr(self, field)
+                for field in self.__slots__
+                if getattr(self, field) is not None}
 
     def items(self):
         return self.dict().items()
 
 
 class FoodSearchResponse:
-    """ Represents a FoodData Search endpoint response object. """
+    """ FoodData Search endpoint response handler. """
 
     __slots__ = (
         'response',
@@ -206,4 +219,4 @@ class FoodSearchResponse:
         self.total_hits: int = data['totalHits']
         self.current_page: int = data['currentPage']
         self.total_pages: int = data['totalPages']
-        self.foods: List[Food] = [data['foods']]
+        self.foods: List[Food] = [Food(_dict_=_dict_) for _dict_ in data['foods']]
