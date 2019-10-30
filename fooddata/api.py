@@ -1,9 +1,8 @@
 """
 
 References:
-    https://fdc.nal.usda.gov/
+    https://fdc.nal.usda.gov/api-guide.html
 """
-
 import json
 
 import decouple
