@@ -51,6 +51,12 @@ class FoodSearchCriteria(utils.DataClass):
         ('sort_direction', SortDirection),
     )
 
+    def __init__(self, _dict_: dict = None, **kwargs):
+        super(FoodSearchCriteria, self).__init__(_dict_)
+        for k, v in kwargs:
+            if k in self.__slots__:
+                setattr(self, k, v)
+
 
 #
 
