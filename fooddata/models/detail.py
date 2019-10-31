@@ -86,6 +86,46 @@ class BrandedFood(utils.DataClass):
     )
 
 
+class SurveyFnddsFood(utils.DataClass):
+    """
+    Foods whose consumption is measured by the What We Eat In America
+    dietary survey component of the National Health and Nutrition
+    Examination Survey (NHANES). Survey nutrient values are usually
+    calculated from Branded and SR Legacy data.
+
+    Attributes:
+
+    """
+    pass
+
+
+class FoundationFood(utils.DataClass):
+    """
+    Foods whose nutrient and food component values are derived
+    primarily by chemical analysis. Foundation data also include
+    extensive underlying metadata, such as the number of samples,
+    the location and dates on which samples were obtained, analytical
+    approaches used, and if appropriate, cultivar, genotype, and
+    production practices.
+
+    Attributes:
+
+    """
+    pass
+
+
+class SrLegacyFood(utils.DataClass):
+    """
+    Foods from the April 2018 release of the USDA National Nutrient
+    Database for Standard Reference. Nutrient and food component values
+    are derived from chemical analysis and calculation.
+
+    Attributes:
+
+    """
+    pass
+
+
 class FoodDetailResponse:
     """ FoodData Detail endpoint Response handler. """
 
