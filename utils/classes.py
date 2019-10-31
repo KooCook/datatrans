@@ -17,7 +17,8 @@ def one_itemgetter(*args):
 
 class DataClassMeta(type):
     def __new__(mcs, name: str, bases: tuple, namespace: dict):
-        if namespace['__attr__'] == () and name != 'DataClass':
+        if not hasattr(namespace, '__attr__') or (
+                namespace['__attr__'] == () and name != 'DataClass'):
             raise AttributeError('class attribute \'__attr__\' is not '
                                  'defined in {}'.format(name))
 
