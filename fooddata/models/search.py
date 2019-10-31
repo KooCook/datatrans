@@ -29,15 +29,15 @@ class FoodSearchCriteria(utils.DataClass):
     """Represents a FoodData Central search criteria.
 
     Attributes:
-        general_search_input: Search query (general text)
-        included_data_types: Specific data types to include in search
+        general_search_input (str): Search query (general text)
+        included_data_types (dict): Specific data types to include in search
         ingredients: The list of ingredients (as it appears on the product label)
-        brand_owner: Brand owner for the food
-        require_all_words: When True, the search will only return foods
+        brand_owner (str): Brand owner for the food
+        require_all_words (bool): When True, the search will only return foods
         contain all of the words that were entered in the search field
-        page_number: The page of results to return
-        sort_field: The name of the field by which to sort
-        sort_direction: The direction of the sorting
+        page_number (int): The page of results to return
+        sort_field (SortField): The name of the field by which to sort
+        sort_direction (SortDirection): The direction of the sorting
     """
 
     __attr__ = (
