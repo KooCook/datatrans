@@ -9,9 +9,8 @@ import enum
 
 import requests
 
-import utils
+import utils.fooddata
 from fooddata.models.search import FoodDataType
-import fooddata.utils
 
 
 class BrandedFood(utils.DataClass):
@@ -46,8 +45,8 @@ class BrandedFood(utils.DataClass):
         ('serving_size', str),
         ('household_serving_fulltext', str),
         ('branded_food_category', str),
-        ('modified_date', datetime.date, fooddata.utils.parse_date),
-        ('available_date', datetime.date, fooddata.utils.parse_date),
+        ('modified_date', datetime.date, utils.fooddata.parse_date),
+        ('available_date', datetime.date, utils.fooddata.parse_date),
     )
 
 
@@ -80,7 +79,7 @@ class Food(utils.DataClass):
         ('data_type', FoodDataType),
         ('description', str),
         ('food_category_id', str),
-        ('publication_date', datetime.date, fooddata.utils.parse_date),
+        ('publication_date', datetime.date, utils.fooddata.parse_date),
         ('scientific_name', str),
         ('food_key', str),
     )
@@ -149,8 +148,8 @@ class SurveyFnddsFood(utils.DataClass):
         ('fdc_id', int),
         ('food_code', str),
         ('wweia_category_code', str),
-        ('start_date', datetime.date, fooddata.utils.parse_date),
-        ('end_date', datetime.date, fooddata.utils.parse_date),
+        ('start_date', datetime.date, utils.fooddata.parse_date),
+        ('end_date', datetime.date, utils.fooddata.parse_date),
     )
 
 

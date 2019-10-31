@@ -6,6 +6,8 @@ import warnings
 import structured_data as schema
 from utils import BASE_DIR
 
+import utils.structured_data
+
 
 @enum.unique
 class DataSet(enum.Enum):
@@ -129,7 +131,7 @@ if __name__ == '__main__':
 
     with open(BASE_DIR / 'assets/cookstr-recipes.json-ld', 'w') as jsonfile:
         for recipe in recipes:
-            jsonfile.write(json.dumps(recipe, default=schema.utils.default))
+            jsonfile.write(json.dumps(recipe, default=utils.structured_data.default))
             jsonfile.write('\n')
 
     # print(json.dumps(recipes, default=schema.utils.default))

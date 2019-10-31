@@ -5,4 +5,3 @@ from structured_data.person import Person
 from structured_data.recipe import NutritionInformation, Recipe
 from structured_data.review import AggregateRating
 from structured_data.video import VideoObject
-from structured_data import utils

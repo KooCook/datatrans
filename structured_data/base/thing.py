@@ -3,7 +3,6 @@ import json
 from typing import List
 
 import utils
-from structured_data import utils
 
 
 class Thing(metaclass=abc.ABCMeta):
@@ -24,7 +23,7 @@ class Thing(metaclass=abc.ABCMeta):
         return properties
 
     def __str__(self):
-        return json.dumps(self, default=utils.default)
+        return json.dumps(self, default=utils.structured_data.default)
 
     @property
     def type(self) -> str:
