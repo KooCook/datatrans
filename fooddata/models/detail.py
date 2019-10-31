@@ -14,41 +14,6 @@ from fooddata.models.search import FoodDataType
 import fooddata.utils
 
 
-class FoodClass(enum.Enum):
-    FOUNDATION = 'FinalFood'
-    SURVEY = 'Survey'
-    BRANDED = 'Branded'
-    LEGACY = 'FinalFood'
-
-
-class Food(utils.DataClass):
-    """Any substance consumed by humans for nutrition, taste and/or aroma.
-
-    Attributes:
-        fdc_id (int): Unique permanent identifier of the food
-        food_class (FoodClass): For internal use only
-        data_type (FoodDataType): Type of food data
-            (see Files tab for possible values).
-        description (str): Description of the food
-        food_category_id: Id of the food category the food belongs to
-        publication_date: Date when the food was published to FoodData Central
-        scientific_name: The scientific name for the food
-        food_key: A string of characters used to identify both the
-            current and all historical records for a specific food.
-    """
-
-    __attr__ = (
-        ('fdc_id', int),
-        ('food_class', FoodClass),
-        ('data_type', FoodDataType),
-        ('description', str),
-        ('food_category_id', str),
-        ('publication_date', datetime.date, fooddata.utils.parse_date),
-        ('scientific_name', str),
-        ('food_key', str),
-    )
-
-
 class BrandedFood(utils.DataClass):
     """
     Foods whose nutrient values are typically obtained from food label
@@ -67,9 +32,9 @@ class BrandedFood(utils.DataClass):
             by GDSN or Label Insight
         data_source: The source of the data for this food. GDSN (for GS1)
             or LI (for Label Insight).
-        modified_date: This date reflects when the product data was last
+        modified_date (datetime.date): This date reflects when the product data was last
             modified by the data provider, i.e., the manufacturer
-        available_date: This is the date when the product record was
+        available_date (datetime.date): This is the date when the product record was
             available for inclusion in the database.
     """
 
@@ -86,17 +51,39 @@ class BrandedFood(utils.DataClass):
     )
 
 
-class SurveyFnddsFood(utils.DataClass):
-    """
-    Foods whose consumption is measured by the What We Eat In America
-    dietary survey component of the National Health and Nutrition
-    Examination Survey (NHANES). Survey nutrient values are usually
-    calculated from Branded and SR Legacy data.
+class FoodClass(enum.Enum):
+    FOUNDATION = 'FinalFood'
+    SURVEY = 'Survey'
+    BRANDED = 'Branded'
+    LEGACY = 'FinalFood'
+
+
+class Food(utils.DataClass):
+    """Any substance consumed by humans for nutrition, taste and/or aroma.
 
     Attributes:
-
+        fdc_id (int): Unique permanent identifier of the food
+        food_class (FoodClass): For internal use only
+        data_type (FoodDataType): Type of food data
+            (see Files tab for possible values).
+        description (str): Description of the food
+        food_category_id: Id of the food category the food belongs to
+        publication_date (datetime.date): Date when the food was published to FoodData Central
+        scientific_name (datetime.date): The scientific name for the food
+        food_key: A string of characters used to identify both the
+            current and all historical records for a specific food.
     """
-    pass
+
+    __attr__ = (
+        ('fdc_id', int),
+        ('food_class', FoodClass),
+        ('data_type', FoodDataType),
+        ('description', str),
+        ('food_category_id', str),
+        ('publication_date', datetime.date, fooddata.utils.parse_date),
+        ('scientific_name', str),
+        ('food_key', str),
+    )
 
 
 class FoundationFood(utils.DataClass):
@@ -109,9 +96,19 @@ class FoundationFood(utils.DataClass):
     production practices.
 
     Attributes:
-
+        fdc_id (int): ID of the food in the food table
+        NDB_number: Unique number assigned for the food, different from
+            fdc_id, assigned in SR
+        footnote (str): Comments on any unusual aspects. These are
+            released to the public Examples might include unusual
+            aspects of the food overall.
     """
-    pass
+
+    __attr__ = (
+        ('fdc_id', int),
+        ('NDB_number', str),  # temp
+        ('footnote', str),
+    )
 
 
 class SrLegacyFood(utils.DataClass):
@@ -121,9 +118,40 @@ class SrLegacyFood(utils.DataClass):
     are derived from chemical analysis and calculation.
 
     Attributes:
+        fdc_id (int): ID of the food in the food table
+        NDB_number: Unique number assigned for the food, different from
+            fdc_id, assigned in SR
 
     """
-    pass
+
+    __attr__ = (
+        ('fdc_id', int),
+        ('NDB_number', str),  # temp
+    )
+
+
+class SurveyFnddsFood(utils.DataClass):
+    """
+    Foods whose consumption is measured by the What We Eat In America
+    dietary survey component of the National Health and Nutrition
+    Examination Survey (NHANES). Survey nutrient values are usually
+    calculated from Branded and SR Legacy data.
+
+    Attributes:
+        fdc_id (int): ID of the food in the food table
+        food_code (str): A unique ID identifying the food within FNDDS
+        wweia_category_code: Unique Identification code for WWEIA food category to which this food is assigned
+        start_date (datetime.date): Start date indicates time period corresponding to WWEIA data
+        end_date (datetime.date): End date indicates time period corresponding to WWEIA data
+    """
+
+    __attr__ = (
+        ('fdc_id', int),
+        ('food_code', str),
+        ('wweia_category_code', str),
+        ('start_date', datetime.date, fooddata.utils.parse_date),
+        ('end_date', datetime.date, fooddata.utils.parse_date),
+    )
 
 
 class FoodDetailResponse:
