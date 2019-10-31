@@ -11,7 +11,7 @@ import requests
 
 import utils
 from fooddata.models.search import FoodDataType
-from fooddata.utils import parse_date
+import fooddata.utils
 
 
 class FoodClass(enum.Enum):
@@ -21,7 +21,7 @@ class FoodClass(enum.Enum):
     LEGACY = 'FinalFood'
 
 
-class Food:
+class Food(utils.DataClass):
     """Any substance consumed by humans for nutrition, taste and/or aroma.
 
     Attributes:
@@ -37,45 +37,19 @@ class Food:
             current and all historical records for a specific food.
     """
 
-    __slots__ = (
-        'fdc_id',
-        'food_class',
-        'data_type',
-        'description',
-        'food_category_id',
-        'publication_date',
-        'scientific_name',
-        'food_key',
+    __attr__ = (
+        ('fdc_id', int),
+        ('food_class', FoodClass),
+        ('data_type', FoodDataType),
+        ('description', str),
+        ('food_category_id', str),
+        ('publication_date', datetime.date, fooddata.utils.parse_date),
+        ('scientific_name', str),
+        ('food_key', str),
     )
 
-    def __init__(self,*, _dict_: dict):
-        """Create a Food data class.
 
-        Args:
-            _dict_: A dict with fields in camelCase to base creation on
-        """
-        if _dict_ is None:
-            _dict_ = {}
-        elif not isinstance(_dict_, dict):
-            raise ValueError('\'_dict_\' should be a \'dict\'')
-        for k, v in locals().items():
-            if k not in self.__slots__:
-                continue
-            if v is not None:
-                _dict_[utils.snake_to_camel(k)] = v
-
-        self.fdc_id: int = _dict_.pop('fdcId', None)
-        self.food_class: FoodClass = FoodClass(_dict_.pop('foodClass', None))
-        self.data_type: FoodDataType = FoodDataType(_dict_.pop('dataType', None))
-        self.description: str = _dict_.pop('description', None)
-        self.publication_date: 'datetime.date' = parse_date(_dict_.pop('publicationDate', None))
-
-        self.food_category_id = _dict_.pop('foodCategoryId', None)
-        self.food_key = _dict_.pop('foodKey', None)
-        self.scientific_name = _dict_.pop('scientificName', None)
-
-
-class BrandedFood:
+class BrandedFood(utils.DataClass):
     """
     Foods whose nutrient values are typically obtained from food label
     data provided by food brand owners.
@@ -99,22 +73,17 @@ class BrandedFood:
             available for inclusion in the database.
     """
 
-    __slots__ = (
-        'fdc_id',
-        'brand_owner',
-        'gtin_upc',
-        'ingredients',
-        'serving_size',
-        'serving_size_unit',
-        'household_serving_fulltext',
-        'branded_food_category',
-        'data_source',
-        'modified_date',
-        'available_date',
+    __attr__ = (
+        ('fdc_id', int),
+        ('brand_owner', str),
+        ('gtin_upc', str),
+        ('ingredients', str),
+        ('serving_size', str),
+        ('household_serving_fulltext', str),
+        ('branded_food_category', str),
+        ('modified_date', datetime.date, fooddata.utils.parse_date),
+        ('available_date', datetime.date, fooddata.utils.parse_date),
     )
-
-    def __init__(self, *, _dict_: dict):
-        pass
 
 
 class FoodDetailResponse:

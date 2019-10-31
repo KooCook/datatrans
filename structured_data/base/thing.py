@@ -11,7 +11,7 @@ class Thing(metaclass=abc.ABCMeta):
     PROPERTIES = NotImplemented
 
     def __init_subclass__(cls, **kwargs):
-        super().__init_subclass__(**kwargs)
+        super().__init_subclass__()
         if cls.PROPERTIES is NotImplemented:
             raise NotImplementedError('class attribute \'PROPERTIES\' is not '
                                       'defined in {}'.format(cls.__name__))
