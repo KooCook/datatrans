@@ -19,6 +19,20 @@ def snake_to_camel(string: str) -> str:
     return first + ''.join(s.title() for s in others)
 
 
+def trim_spaces(string: str) -> str:
+    """Trims excess spaces
+
+    Examples:
+        >>> trim_spaces(' pretty')
+        'pretty'
+        >>> trim_spaces(' CHEDDAR CHEESE')
+        'CHEDDAR CHEESE'
+        >>> trim_spaces(' salt  ')
+        'salt'
+    """
+    return ' '.join(_ for _ in string.split(' ') if _)
+
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
