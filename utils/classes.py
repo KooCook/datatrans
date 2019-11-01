@@ -4,14 +4,32 @@ from operator import itemgetter
 from utils.functions import snake_to_camel
 
 
-def one_itemgetter(*args):
+def one_itemgetter(*items):
     def get(obj):
-        for arg in args:
+        for item in items:
             try:
-                return obj[arg]
+                return obj[item]
             except IndexError:
                 pass
-        raise IndexError('tuple index out of range')
+            except KeyError:
+                pass
+        if isinstance(items, int):
+            raise IndexError('tuple index out of range')
+        raise KeyError('no keys matching {}'.format(str(items)[1:-1]))
+    return get
+
+
+def none_or_itemgetter(item, *items):
+    if items:
+        raise NotImplementedError
+
+    def get(obj):
+        try:
+            return obj[item]
+        except IndexError:
+            return None
+        except KeyError:
+            return None
     return get
 
 
@@ -27,10 +45,11 @@ class DataClassMeta(type):
 
         try:
             namespace['__slots__'] = tuple(map(itemgetter(0), namespace['__attr__']))
-            # __types__ and __inits__ is constructed here so that
-            # the error comes up in compile time
+            # __types__ and __inits__ are constructed here so that
+            # the error comes up in class creation time
             namespace['__types__'] = tuple(map(itemgetter(1), namespace['__attr__']))
             namespace['__inits__'] = tuple(map(one_itemgetter(2, 1), namespace['__attr__']))
+            namespace['__params__'] = tuple(map(none_or_itemgetter(3), namespace['__attr__']))
         except IndexError as e:
             raise AttributeError('class {} is missing some type specification '
                                  'in __attr__'.format(name)) from e.__context__
@@ -41,7 +60,7 @@ class DataClassMeta(type):
 class DataClass(metaclass=DataClassMeta):
 
     __attr__ = ()
-    # ((name, type, init), ...)
+    # ((name, type[, init][, kwargs]), ...)
 
     def __init__(self, _dict_: dict = None):
         """
@@ -54,22 +73,26 @@ class DataClass(metaclass=DataClassMeta):
         elif not isinstance(_dict_, dict):
             raise ValueError('\'_dict_\' should be a \'dict\'')
 
-        try:
-            types = list(map(itemgetter(1), self.__attr__))
-            inits = list(map(one_itemgetter(2, 1), self.__attr__))
-        except IndexError as e:
-            raise AttributeError('class {} is missing some type specification '
-                                 'in __attr__'.format(self.__class__.__name__)
-                                 ) from e.__context__
+        # try:
+        #     types = list(map(itemgetter(1), self.__attr__))
+        #     inits = list(map(one_itemgetter(2, 1), self.__attr__))
+        # except IndexError as e:
+        #     raise AttributeError('class {} is missing some type specification '
+        #                          'in __attr__'.format(self.__class__.__name__)
+        #                          ) from e.__context__
 
         for i in range(len(self.__slots__)):
             attr = self.__slots__[i]
-            type_ = types[i]
-            init = inits[i]
+            type_ = self.__types__[i]
+            init = self.__inits__[i]
+            params = self.__params__[i]
             try:
                 if _dict_[snake_to_camel(attr)] is not None:
                     # so that TypeError isn't raised and falsely suppressed
-                    setattr(self, attr, init(_dict_.pop(snake_to_camel(attr))))
+                    if params is None:
+                        setattr(self, attr, init(_dict_.pop(snake_to_camel(attr))))
+                    else:
+                        setattr(self, attr, init(_dict_.pop(snake_to_camel(attr), **params)))
                 else:
                     setattr(self, attr, None)
             except KeyError:

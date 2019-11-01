@@ -4,8 +4,7 @@ BASE_DIR = Path(__file__).parent.parent
 
 
 def snake_to_camel(string: str) -> str:
-    """
-    Returns a new str in camelCase, given an str in snake case.
+    """Returns a new str in camelCase, given an str in snake case.
     Removes all underscore before and after.
 
     Examples:

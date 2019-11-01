@@ -91,7 +91,7 @@ class Food(utils.DataClass):
         ('fdc_id', int),
         ('description', str),
         ('data_type', FoodDataType),
-        ('published_date', datetime.date, utils.fooddata.parse_date),
+        ('published_date', datetime.date, utils.fooddata.parse_date, {'sep': '/', 'format': 'MDY'}),
         ('all_highlight_fields', str),
         ('score', float),
         # Survey only
