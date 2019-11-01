@@ -13,6 +13,17 @@ import utils.fooddata
 from fooddata.models.search import FoodDataType
 
 
+class FoodClass(enum.Enum):
+    FOUNDATION = 'FinalFood'
+    SURVEY = 'Survey'
+    BRANDED = 'Branded'
+    LEGACY = 'FinalFood'
+
+
+# class FoodNutrient(utils.DataClass):
+#     pass
+
+
 class BrandedFood(utils.DataClass):
     """
     Foods whose nutrient values are typically obtained from food label
@@ -23,7 +34,7 @@ class BrandedFood(utils.DataClass):
         brand_owner: Brand owner for the food
         gtin_upc: GTIN or UPC code identifying the food
         ingredients: The list of ingredients (as it appears on the product label)
-        serving_size: The amount of the serving size when expressed as gram or ml
+        serving_size (float): The amount of the serving size when expressed as gram or ml
         serving_size_unit: The unit used to express the serving size (gram or ml)
         household_serving_fulltext: amount and unit of serving size when
             expressed in household units
@@ -38,23 +49,33 @@ class BrandedFood(utils.DataClass):
     """
 
     __attr__ = (
+        # Excel
         ('fdc_id', int),
         ('brand_owner', str),
-        ('gtin_upc', str),
-        ('ingredients', str),
-        ('serving_size', str),
-        ('household_serving_fulltext', str),
+        ('gtin_upc', str),  # 11 digits of number (0-9)
+        ('ingredients', str),  # csv (with spaces)
+        ('serving_size', float),  # may be int
+        ('household_serving_fulltext', str),  # cup
         ('branded_food_category', str),
-        ('modified_date', datetime.date, utils.fooddata.parse_date),
-        ('available_date', datetime.date, utils.fooddata.parse_date),
+        ('data_source', str),  # "LI"
+        ('modified_date', datetime.date,
+         utils.fooddata.parse_date, {'sep': '/', 'format': 'MDY'}),
+        ('available_date', datetime.date,
+         utils.fooddata.parse_date, {'sep': '/', 'format': 'MDY'}),
+        # actual JSON
+        ('foodClass', FoodClass),  # FoodClass.BRANDED
+        ('food_nutrients', list),
+        ('food_components', list),
+        ('food_attributes', list),
+        ('table_alias_name', str),  # "branded_food"
+        ('serving_size_unit', str),  # lowercase g
+        ('label_nutrients', dict),  # Dict[name, Dict["value", value]]
+        ('data_type', FoodDataType),
+        ('publication_date', datetime.date,
+         utils.fooddata.parse_date, {'sep': '/', 'format': 'MDY'}),
+        ('food_portions', list),
+        ('changes', str),
     )
-
-
-class FoodClass(enum.Enum):
-    FOUNDATION = 'FinalFood'
-    SURVEY = 'Survey'
-    BRANDED = 'Branded'
-    LEGACY = 'FinalFood'
 
 
 class Food(utils.DataClass):
