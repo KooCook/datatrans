@@ -3,9 +3,9 @@ https://developers.google.com/search/docs/data-types/video
 """
 from typing import Iterable, Union
 
-from structured_data.base import URL, Date, Property, Text, Thing
-from structured_data.lower.interaction_counter import InteractionCounter
-from structured_data.lower.quantity import Duration
+from datatrans.structured_data.base import URL, Date, Property, Text, Thing
+from datatrans.structured_data.lower.interaction_counter import InteractionCounter
+from datatrans.structured_data.lower.quantity import Duration
 
 
 class VideoObject(Thing):
@@ -94,9 +94,9 @@ class VideoObject(Thing):
 
 if __name__ == '__main__':
     import json
-    from structured_data import utils
-    from structured_data.lower.action import Action
-    from structured_data.base import DateTime
+    from datatrans.structured_data import utils
+    from datatrans.structured_data.lower.action import Action
+    from datatrans.structured_data.base import DateTime
 
     print(json.dumps(VideoObject(
         name='Introducing the self-driving bicycle in the Netherlands',

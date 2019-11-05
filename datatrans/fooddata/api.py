@@ -4,12 +4,14 @@ References:
     https://fdc.nal.usda.gov/api-guide.html
 """
 import json
+import importlib
 
 import decouple
 import requests
 
-import utils
-from fooddata.models.search import FoodSearchCriteria
+from datatrans.fooddata.models.search import FoodSearchCriteria
+
+utils = importlib.import_module('datatrans.utils')
 
 
 def send_food_search_api_request(

@@ -1,9 +1,11 @@
-import datetime as _datetime
-import numbers as _numbers
+import datetime
+import numbers
+
+__all__ = ['Boolean', 'Number', 'Float', 'Integer', 'Text', 'URL', 'Date', 'DateTime', 'Time']
 
 Boolean = bool
 # Boolean is subclass of Number different from schema.org
-Number = _numbers.Number
+Number = numbers.Number
 Float = float
 Integer = int
 Text = str
@@ -28,7 +30,7 @@ class URL(Text):
             return False
 
 
-class Date(_datetime.date):
+class Date(datetime.date):
     """
     Represents ``Date``.
     Adds JSON support to Python Standard Library ``datetime.Date``.
@@ -40,7 +42,7 @@ class Date(_datetime.date):
         return self.isoformat()
 
 
-class Time(_datetime.time):
+class Time(datetime.time):
     """
     Represents ``Time``.
     Adds JSON support to Python Standard Library ``datetime.Time``
@@ -52,7 +54,7 @@ class Time(_datetime.time):
         return self.isoformat()
 
 
-class DateTime(_datetime.datetime, Date):
+class DateTime(datetime.datetime, Date):
     """
     Represents ``DateTime``.
     Adds JSON support to Python Standard Library ``datetime.DateTime``
@@ -83,7 +85,7 @@ class DateTime(_datetime.datetime, Date):
 
 if __name__ == '__main__':
     import json
-    from structured_data import utils
+    import datatrans.utils.structured_data as utils
 
     print(json.dumps(Date(2018, 3, 10), default=utils.default))
     print(json.dumps(Time(0, 20, 0), default=utils.default))

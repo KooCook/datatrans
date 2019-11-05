@@ -1,8 +1,9 @@
 import abc
 import json
 from typing import List
+import importlib
 
-import utils
+utils = importlib.import_module('datatrans.utils')
 
 
 class Thing(metaclass=abc.ABCMeta):
@@ -30,7 +31,7 @@ class Thing(metaclass=abc.ABCMeta):
         return self.__class__.__name__
 
     def add_context(self, context: str = 'https://schema.org/'):
-        from structured_data.base.data_type import Text
+        from datatrans.structured_data.base.data_type import Text
         self._context = Text(context)
 
     def has_context(self):
@@ -64,7 +65,7 @@ class Property(list, List):
 
 
 if __name__ == '__main__':
-    from structured_data.base.data_type import Text
+    from datatrans.structured_data.base.data_type import Text
     urls = [
         Text('http://example.com/coffee_cake.html'),
     ]

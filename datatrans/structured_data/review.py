@@ -1,4 +1,4 @@
-from structured_data.base import Thing, Number
+from datatrans.structured_data.base import Thing, Number
 
 
 class AggregateRating(Thing):
@@ -87,7 +87,7 @@ class AggregateRating(Thing):
 
 if __name__ == '__main__':
     import json
-    from structured_data import utils
+    from datatrans.structured_data import utils
 
     print(json.dumps(AggregateRating(
         ratingValue=4.6,

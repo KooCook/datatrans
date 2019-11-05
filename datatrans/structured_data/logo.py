@@ -1,7 +1,7 @@
 """
 https://developers.google.com/search/docs/data-types/logo
 """
-from structured_data.base import Thing
+from .base import Thing
 
 
 class Organization(Thing):

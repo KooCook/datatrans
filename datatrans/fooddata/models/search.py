@@ -3,13 +3,15 @@
 References:
     https://fdc.nal.usda.gov/api-guide.html#food-search-endpoint
 """
+from typing import Dict, List
+
 import datetime
 import enum
-from typing import Dict, List
+import importlib
 
 import requests
 
-import utils.fooddata
+utils = importlib.import_module('datatrans.utils')
 
 
 class SortField(enum.Enum):

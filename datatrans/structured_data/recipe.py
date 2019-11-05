@@ -6,11 +6,11 @@ References:
 from typing import Iterable, Optional, Union
 import warnings
 
-from structured_data.base import URL, Date, Number, Property, Text, Thing
-from structured_data.lower.quantity import Duration, Energy, EnergyUnit
-from structured_data.person import Person
-from structured_data.review import AggregateRating
-from structured_data.video import VideoObject
+from datatrans.structured_data.base import URL, Date, Number, Property, Text, Thing
+from datatrans.structured_data.lower.quantity import Duration, Energy, EnergyUnit
+from datatrans.structured_data.person import Person
+from datatrans.structured_data.review import AggregateRating
+from datatrans.structured_data.video import VideoObject
 
 
 class NutritionInformation(Thing):
@@ -288,7 +288,7 @@ class Recipe(Thing):
 
 if __name__ == '__main__':
     import json
-    from structured_data import utils
+    from datatrans.structured_data import utils
 
     print(
         json.dumps(NutritionInformation(calories=1024, ),

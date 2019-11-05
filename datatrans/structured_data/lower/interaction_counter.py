@@ -1,5 +1,5 @@
-from structured_data.base import Integer, Thing
-from structured_data.lower.action import Action
+from datatrans.structured_data.base import Integer, Thing
+from datatrans.structured_data.lower.action import Action
 
 
 class InteractionCounter(Thing):
@@ -29,7 +29,7 @@ class InteractionCounter(Thing):
 
 if __name__ == '__main__':
     import json
-    from structured_data import utils
+    from datatrans.structured_data import utils
 
     print(json.dumps(InteractionCounter(
         interactionType=Action.WatchAction, userInteractionCount=125

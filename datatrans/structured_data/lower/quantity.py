@@ -1,7 +1,7 @@
 import datetime
 import enum
 
-from structured_data.base import Number
+from datatrans.structured_data.base import Number
 
 
 class LengthUnit(enum.Enum):

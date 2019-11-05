@@ -1,7 +1,7 @@
 from typing import Iterable
 from operator import itemgetter
 
-from utils.functions import snake_to_camel
+from datatrans.utils.functions import snake_to_camel
 
 
 def one_itemgetter(*items):

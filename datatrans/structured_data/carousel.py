@@ -36,7 +36,7 @@ References:
 import enum
 from typing import Optional
 
-from structured_data.base import URL, Integer, Property, Thing
+from datatrans.structured_data.base import URL, Integer, Property, Thing
 
 
 class ItemListOrderType(enum.Enum):
