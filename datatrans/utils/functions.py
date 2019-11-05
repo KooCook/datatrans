@@ -159,6 +159,38 @@ def parse_vulgar_fractions(string: str) -> float:
     return number + fraction
 
 
+def get_closest_match(string: str, subs: Iterable[str]) -> Optional[str]:
+    """
+
+    Examples:
+        >>> get_closest_match('¾ cup (1½ sticks) cold unsalted butter, cut into ¼-inch pieces',
+        ... ['unsalted butter', 'all-purpose flour', 'sugar', 'salt', 'water'])
+        'unsalted butter'
+        >>> get_closest_match('¾ cup (1½ sticks) cold unsalted butter, cut into ¼-inch pieces',
+        ... ['unsalted butter', 'salted butter', 'butter', 'sugar', 'salt', 'water'])
+        'unsalted butter'
+        >>> get_closest_match('¾ cup (1½ sticks) cold unsalted butter, cut into ¼-inch pieces',
+        ... ['salted butter', 'butter', 'sugar', 'salt', 'water'])
+        'butter'
+        >>> get_closest_match('¾ cup (1½ sticks) cold unsalted butter, cut into ¼-inch pieces',
+        ... ['butter', 'sugar', 'salt', 'water'])
+        'butter'
+        >>> get_closest_match('¾ cup (1½ sticks) cold unsalted butter, cut into ¼-inch pieces',
+        ... ['sugar', 'salt', 'water'])
+    """
+    import difflib
+    matches = []
+    for sub in subs:
+        if sub in string:
+            matches.append(sub)
+    if matches:
+        return difflib.get_close_matches(string, matches, cutoff=0)[0]
+    try:
+        return difflib.get_close_matches(string, subs)[0]
+    except IndexError:
+        return
+
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod(optionflags=doctest.ELLIPSIS)
