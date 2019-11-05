@@ -1,4 +1,4 @@
-from datatrans.structured_data.base import Thing, Number
+from datatrans.structured_data.base import Number, Thing
 
 
 class AggregateRating(Thing):

@@ -1,7 +1,7 @@
 import abc
+import importlib
 import json
 from typing import List
-import importlib
 
 utils = importlib.import_module('datatrans.utils')
 

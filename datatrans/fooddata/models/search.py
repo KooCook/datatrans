@@ -3,11 +3,10 @@
 References:
     https://fdc.nal.usda.gov/api-guide.html#food-search-endpoint
 """
-from typing import Dict, List
-
 import datetime
 import enum
 import importlib
+from typing import Dict, List
 
 import requests
 

@@ -3,8 +3,8 @@
 References:
     https://fdc.nal.usda.gov/api-guide.html
 """
-import json
 import importlib
+import json
 
 import decouple
 import requests

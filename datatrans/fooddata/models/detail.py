@@ -11,6 +11,7 @@ import importlib
 import requests
 
 from datatrans.fooddata.models.search import FoodDataType
+
 utils = importlib.import_module('datatrans.utils')
 
 

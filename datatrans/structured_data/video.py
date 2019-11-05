@@ -4,7 +4,8 @@ https://developers.google.com/search/docs/data-types/video
 from typing import Iterable, Union
 
 from datatrans.structured_data.base import URL, Date, Property, Text, Thing
-from datatrans.structured_data.lower.interaction_counter import InteractionCounter
+from datatrans.structured_data.lower.interaction_counter import \
+    InteractionCounter
 from datatrans.structured_data.lower.quantity import Duration
 
 

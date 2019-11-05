@@ -3,8 +3,8 @@
 References:
     https://developers.google.com/search/docs/data-types/recipe
 """
-from typing import Iterable, Optional, Union
 import warnings
+from typing import Iterable, Optional, Union
 
 from datatrans.structured_data.base import URL, Date, Number, Property, Text, Thing
 from datatrans.structured_data.lower.quantity import Duration, Energy, EnergyUnit

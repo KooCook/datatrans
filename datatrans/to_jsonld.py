@@ -1,7 +1,7 @@
 import enum
 import json
-from pathlib import Path
 import warnings
+from pathlib import Path
 
 import datatrans.structured_data as schema
 import datatrans.utils
