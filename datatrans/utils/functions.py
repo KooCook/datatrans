@@ -95,7 +95,7 @@ def parse_numeral(string: str) -> int:
 
 
 def parse_vulgar_fractions(string: str) -> float:
-    """Converts ``str`` containing vulgar fractions to ``float``.
+    """Converts ``string`` containing vulgar fractions to ``float``.
 
     Raises:
         ValueError: When `string` is invalid
