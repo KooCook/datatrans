@@ -1,7 +1,6 @@
-from typing import Match
-
-from pathlib import Path
 import re
+from pathlib import Path
+from typing import Iterable, List, Match, Optional
 
 BASE_DIR = Path(__file__).parent.parent.parent
 
@@ -51,6 +50,48 @@ def parse_str_unicode(string: str) -> str:
 
     pattern = re.compile(r'\\u\d\d\d\d')
     return pattern.sub(unicode_repl, string)
+
+
+def parse_numeral(string: str) -> int:
+    """Converts ``string`` containing numeral under 11 to ``int``.
+
+    Examples:
+        >>> parse_numeral('One')
+        1
+        >>> parse_numeral('two')
+        2
+        >>> parse_numeral('three')
+        3
+        >>> parse_numeral('four')
+        4
+        >>> parse_numeral('five')
+        5
+        >>> parse_numeral('six')
+        6
+        >>> parse_numeral('seven')
+        7
+        >>> parse_numeral('eight')
+        8
+        >>> parse_numeral('nine')
+        9
+        >>> parse_numeral('ten')
+        10
+    """
+    try:
+        return {
+            'one': 1,
+            'two': 2,
+            'three': 3,
+            'four': 4,
+            'five': 5,
+            'six': 6,
+            'seven': 7,
+            'eight': 8,
+            'nine': 9,
+            'ten': 10,
+        }[string.lower()]
+    except KeyError as e:
+        raise ValueError('cannot parse \'\''.format(string)) from e.__context__
 
 
 def parse_vulgar_fractions(string: str) -> float:
