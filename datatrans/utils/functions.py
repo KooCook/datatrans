@@ -159,24 +159,6 @@ def parse_vulgar_fractions(string: str) -> float:
     return number + fraction
 
 
-def split_ingredient_str(string: str) -> List[str]:
-    """
-
-    Examples:
-        >>> split_ingredient_str('1 1/2 large onions, finely sliced')
-        ['1 1/2', '', 'large onions, finely sliced']
-        >>> split_ingredient_str('One 10-inch-long beef tenderloin roast cut from the heart of the tenderloin (2\\u00bd to 3 pounds), butterflied (see Note)')
-        ['One', '', '10-inch-long beef tenderloin roast cut from the heart of the tenderloin (2\\u00bd to 3 pounds), butterflied (see Note)']
-        >>> split_ingredient_str('4 ounces thinly sliced salami, cut into \\u00bc-inch-wide matchsticks')
-        ['4', 'ounces', 'thinly sliced salami, cut into \\u00bc-inch-wide matchsticks']
-        >>> split_ingredient_str('2 garlic cloves, finely minced')
-        ['2', '', 'garlic cloves, finely minced']
-        >>> split_ingredient_str('One plus 3 tablespoons extra virgin olive oil')
-        ['One plus 3 tablespoons', '', 'extra virgin olive oil']
-    """
-    pass
-
-
 def get_closest_match(string: str, subs: Iterable[str]) -> Optional[str]:
     """
 
