@@ -91,7 +91,7 @@ def parse_numeral(string: str) -> int:
             'ten': 10,
         }[string.lower()]
     except KeyError as e:
-        raise ValueError('cannot parse \'\''.format(string)) from e.__context__
+        raise ValueError('cannot parse \'{}\' as numerals'.format(string)) from e.__context__
 
 
 def _parse_unicode_vulgar(string: str) -> float:
