@@ -94,37 +94,7 @@ def parse_numeral(string: str) -> int:
         raise ValueError('cannot parse \'\''.format(string)) from e.__context__
 
 
-def parse_vulgar_fractions(string: str) -> float:
-    """Converts ``string`` containing vulgar fractions to ``float``.
-
-    Raises:
-        ValueError: When `string` is invalid
-        TypeError: When `string` is not a `str`
-
-    Examples:
-        >>> parse_vulgar_fractions('¾')
-        0.75
-        >>> parse_vulgar_fractions('1½')
-        1.5
-        >>> parse_vulgar_fractions('¼')
-        0.25
-        >>> parse_vulgar_fractions('3⅟100')
-        3.01
-        >>> parse_vulgar_fractions('')
-        Traceback (most recent call last):
-          ...
-        ValueError: ...
-        >>> parse_vulgar_fractions('three quarters')
-        Traceback (most recent call last):
-          ...
-        ValueError: ...
-        >>> parse_vulgar_fractions(5)
-        Traceback (most recent call last):
-          ...
-        TypeError: ...
-    """
-    if not isinstance(string, str):
-        raise TypeError('invalid argument of type \'{}\''.format(string.__class__.__name__))
+def _parse_unicode_vulgar(string: str) -> float:
     if '⅟' in string:
         *number, fraction = string.split('⅟')
         fraction = 1 / float(fraction)
@@ -157,6 +127,48 @@ def parse_vulgar_fractions(string: str) -> float:
                              .format(string, fraction)) from e.__context__
     number = float(''.join(number)) if number else 0
     return number + fraction
+
+
+def parse_vulgar_fractions(string: str) -> float:
+    """Converts ``string`` containing vulgar fractions to ``float``.
+
+    Raises:
+        ValueError: When `string` is invalid
+        TypeError: When `string` is not a `str`
+
+    Examples:
+        >>> parse_vulgar_fractions('¾')
+        0.75
+        >>> parse_vulgar_fractions('1½')
+        1.5
+        >>> parse_vulgar_fractions('¼')
+        0.25
+        >>> parse_vulgar_fractions('3⅟100')
+        3.01
+        >>> parse_vulgar_fractions('')
+        Traceback (most recent call last):
+          ...
+        ValueError: ...
+        >>> parse_vulgar_fractions('three quarters')
+        Traceback (most recent call last):
+          ...
+        ValueError: ...
+        >>> parse_vulgar_fractions(5)
+        Traceback (most recent call last):
+          ...
+        TypeError: ...
+        >>> parse_vulgar_fractions('1/2')
+        0.5
+    """
+    if not isinstance(string, str):
+        raise TypeError('invalid argument of type \'{}\''.format(string.__class__.__name__))
+    if '/' in string:
+        try:
+            numerator, denominator = string.split('/')
+            return float(numerator) / float(denominator)
+        except ValueError:
+            pass
+    return _parse_unicode_vulgar(string)
 
 
 def get_closest_match(string: str, subs: Iterable[str]) -> Optional[str]:
