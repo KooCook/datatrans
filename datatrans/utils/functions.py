@@ -3,7 +3,20 @@ from pathlib import Path
 from typing import Iterable, List, Match, Optional
 
 BASE_DIR = Path(__file__).parent.parent.parent
-
+NUMERAL = {
+    'one': 1,
+    'two': 2,
+    'three': 3,
+    'four': 4,
+    'five': 5,
+    'six': 6,
+    'seven': 7,
+    'eight': 8,
+    'nine': 9,
+    'ten': 10,
+    'eleven': 11,
+    'twelve': 12,
+}
 
 def snake_to_camel(string: str) -> str:
     """Returns a new str in camelCase, given an str in snake case.
@@ -52,46 +65,43 @@ def parse_str_unicode(string: str) -> str:
     return pattern.sub(unicode_repl, string)
 
 
-def parse_numeral(string: str) -> int:
-    """Converts ``string`` containing numeral under 11 to ``int``.
+def read_numeral(string: str) -> int:
+    """Converts string containing numeral under 13 to `int`.
+
+    Args:
+        string (str): positional only. string to parse
 
     Examples:
-        >>> parse_numeral('One')
+        >>> read_numeral('One')
         1
-        >>> parse_numeral('two')
+        >>> read_numeral('two')
         2
-        >>> parse_numeral('three')
+        >>> read_numeral('three')
         3
-        >>> parse_numeral('four')
+        >>> read_numeral('four')
         4
-        >>> parse_numeral('five')
+        >>> read_numeral('five')
         5
-        >>> parse_numeral('six')
+        >>> read_numeral('six')
         6
-        >>> parse_numeral('seven')
+        >>> read_numeral('seven ')
         7
-        >>> parse_numeral('eight')
+        >>> read_numeral('eight')
         8
-        >>> parse_numeral('nine')
+        >>> read_numeral('nine')
         9
-        >>> parse_numeral('ten')
+        >>> read_numeral('  ten ')
         10
+        >>> read_numeral('ELEVEN')
+        11
+        >>> read_numeral('twelve')
+        12
     """
     try:
-        return {
-            'one': 1,
-            'two': 2,
-            'three': 3,
-            'four': 4,
-            'five': 5,
-            'six': 6,
-            'seven': 7,
-            'eight': 8,
-            'nine': 9,
-            'ten': 10,
-        }[string.lower()]
+        return NUMERAL[''.join(string.lower().split(' '))]
     except KeyError as e:
-        raise ValueError('cannot parse \'{}\' as numerals'.format(string)) from e.__context__
+        raise ValueError('cannot parse \'{}\' as numerals'
+                         .format(string)) from e.__context__
 
 
 def _parse_unicode_vulgar(string: str) -> float:
