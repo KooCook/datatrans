@@ -60,6 +60,16 @@ def camel_to_snake(s: str) -> str:
     return s
 
 
+def to_constant(s: str) -> str:
+    """Returns a new str in CONSTANT_CASE, given any str.
+
+    Examples:
+        >>> to_constant('to_constant')
+        'TO_CONSTANT'
+    """
+    return s.replace(' ', '_').upper()
+
+
 def trim_spaces(s: str) -> str:
     """Trims excess spaces
 
