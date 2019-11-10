@@ -1,7 +1,7 @@
 import requests
 
 from .food import FoodClass, FoundationFood, SurveyFnddsFood, BrandedFood, SrLegacyFood
-
+from ..search import FoodDataType
 
 class FoodDetailResponse:
     """ FoodData Detail endpoint Response handler. """
@@ -11,7 +11,7 @@ class FoodDetailResponse:
         'food',
     )
 
-    def __init__(self, response: requests.Response):
+    def __init__(self, response: requests.Response, **kwargs):
         """
 
         Args:
@@ -21,6 +21,14 @@ class FoodDetailResponse:
 
         data = response.json()
         if data['foodClass'] == FoodClass.FOUNDATION.value:
+            data_type = kwargs.pop('data_type', None)
+            if data_type:
+                if data_type is FoodDataType.LEGACY:
+                    self.food = SrLegacyFood(_dict_=data)
+                    return
+                if data_type is FoodDataType.FOUNDATION:
+                    self.food = FoundationFood(_dict_=data)
+                    return
             try:
                 self.food = SrLegacyFood(_dict_=data)
             except ValueError as e:
