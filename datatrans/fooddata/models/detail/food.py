@@ -29,7 +29,7 @@ def parse_label_nutrients(data: Dict[str, Dict[str, float]]) -> List[Dict[str, f
 
 
 def parse_nutrient_conversion_factors(data: List[Dict[str, Union[str, float]]]) -> List[NutrientConversionFactor]:
-    return [NutrientConversionFactor(d) for d in data]
+    return [NutrientConversionFactor(_dict_=d) for d in data]
 
 
 class FoodClass(enum.Enum):
