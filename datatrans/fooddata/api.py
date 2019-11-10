@@ -3,19 +3,18 @@
 References:
     https://fdc.nal.usda.gov/api-guide.html
 """
-import importlib
 import json
 
 import decouple
 import requests
 
-from datatrans.fooddata.models.search import FoodSearchCriteria
-
-utils = importlib.import_module('datatrans.utils')
+from datatrans import utils
+from datatrans.fooddata import detail
+from datatrans.fooddata import search
 
 
 def send_food_search_api_request(
-        criteria: FoodSearchCriteria,
+        criteria: search.request.FoodSearchCriteria,
         *, api_key: str = decouple.config('DATA_GOV_API_KEY', 'MY_API_KEY')
 ) -> requests.Response:
     """Send a Food Search Endpoint request.

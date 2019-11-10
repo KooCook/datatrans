@@ -9,7 +9,7 @@ import enum
 from typing import List, Dict, Union
 
 from datatrans import utils
-from datatrans.fooddata.models.search import FoodDataType
+from datatrans.fooddata.search import FoodDataType
 from datatrans.fooddata.models.detail.nutrient import FoodNutrient, NutrientConversionFactor
 from datatrans.fooddata.models.detail.base import IdMixin
 
