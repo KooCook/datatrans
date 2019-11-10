@@ -39,6 +39,21 @@ class FoodClass(enum.Enum):
     LEGACY = 'FinalFood'
 
 
+class FoodCategory(IdMixin, utils.DataClass):
+    """Foods of defined similarity
+
+    Attributes:
+        id (int):
+        code (str): Food group code
+        description (str): Description of the food group
+    """
+    __attr__ = (
+        ('id', int),
+        ('code', str),
+        ('description', str),
+    )
+
+
 class BrandedFood(utils.DataClass):
     """
     Foods whose nutrient values are typically obtained from food label
