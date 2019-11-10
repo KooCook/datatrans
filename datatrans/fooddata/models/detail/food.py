@@ -34,10 +34,6 @@ class FoodClass(enum.Enum):
     LEGACY = 'FinalFood'
 
 
-# class FoodNutrient(utils.DataClass):
-#     pass
-
-
 class BrandedFood(utils.DataClass):
     """
     Foods whose nutrient values are typically obtained from food label
