@@ -356,6 +356,7 @@ class SrLegacyFood(utils.DataClass):
         ('publication_date', datetime.date,
          parse_fooddata_date),
         ('changes', str),
+        ('footnote', str),
     )
 
     def __init__(self, _dict_: dict = None, **kwargs):

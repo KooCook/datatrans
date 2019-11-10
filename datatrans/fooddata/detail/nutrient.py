@@ -76,6 +76,7 @@ class FoodNutrient(IdMixin, utils.DataClass):
         ('max', float),
         ('min', float),
         ('amount', float),
+        ('footnote', str),
     )
 
 
