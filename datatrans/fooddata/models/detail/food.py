@@ -51,6 +51,9 @@ class FoodCategory(IdMixin, utils.DataClass):
         code (str): Food group code
         description (str): Description of the food group
     """
+
+    __slots__ = ('id', 'code', 'description')
+
     __attr__ = (
         ('id', int),
         ('code', str),
@@ -66,6 +69,9 @@ class MeasureUnit(IdMixin, utils.DataClass):
         name: name of the unit
         abbreviation: abbreviated name of the unit
     """
+
+    __slots__ = ('id', 'name', 'abbreviation')
+
     __attr__ = (
         ('id', int),
         ('name', str),
@@ -90,6 +96,9 @@ class FoodPortion(IdMixin, utils.DataClass):
         footnote: Comments on any unusual aspects of the measure. These are released to the public. Examples might include caveats on the usage of a measure, or reasons why a measure gram weight is an unexpected value.
         min_year_acquired: Minimum purchase year of all acquisitions used to derive the measure value
     """
+
+    __slots__ = ('id', 'measure_unit', 'modifier', 'gram_weight', 'data_points', 'amount', 'sequence_number')
+
     __attr__ = (
         ('id', int),
         ('measure_unit', MeasureUnit),
@@ -234,6 +243,11 @@ class SrLegacyFood(utils.DataClass):
             fdc_id, assigned in SR
 
     """
+
+    __slots__ = (
+    'ndb_number', 'fdc_id', 'foodClass', 'description', 'food_nutrients', 'food_components', 'food_attributes',
+    'table_alias_name', 'nutrient_conversion_factors', 'is_historical_reference', 'data_type', 'data_type',
+    'food_category', 'food_portions', 'input_foods', 'publication_date', 'changes')
 
     __attr__ = (
         # Excel
