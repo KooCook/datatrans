@@ -70,6 +70,7 @@ class BrandedFood(utils.DataClass):
          parse_fooddata_date),
         # actual JSON
         ('foodClass', FoodClass),  # FoodClass.BRANDED
+        ('description', str),
         ('food_nutrients', list),
         ('food_components', list),
         ('food_attributes', list),
