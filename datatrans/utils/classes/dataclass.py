@@ -1,8 +1,10 @@
 from operator import itemgetter
 from typing import Iterable
 import warnings
+import json
 
 from datatrans.utils.functions import snake_to_camel
+from datatrans.utils.classes.encoder import JSONEncoder
 
 __all__ = ['DataClass']
 
@@ -130,3 +132,9 @@ class DataClass(metaclass=DataClassMeta):
 
     def items(self) -> Iterable:
         return self.dict.items()
+
+    def json_serial(self):
+        return self.dict
+
+    def __repr__(self):
+        return json.dumps(self.dict, cls=JSONEncoder)
