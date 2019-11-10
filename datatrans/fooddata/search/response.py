@@ -13,13 +13,13 @@ class Food(utils.DataClass):
     Attributes:
         fdc_id: Unique ID of the food.
         description: The description of the food.
-        # scientific_name: Optional. The scientific name of the food.
-        # common_names: Optional. Any other common names for the food.
+        scientific_name: Optional. The scientific name of the food.
+        common_names: Optional. Any other common names for the food.
         additional_descriptions: Optional. Any additional descriptions of the food.
         data_type: The type of the food data.
         food_code: Any A unique ID identifying the food within FNDDS.
         gtin_upc: GTIN or UPC code identifying the food.
-        # ndb_number: Unique number assigned for foundation foods.
+        ndb_number: Unique number assigned for foundation foods.
         published_date: Date the item was published to FDC.
         brand_owner: Brand owner for the food.
         # ingredients: The list of ingredients (as it appears on the product label).
@@ -31,7 +31,8 @@ class Food(utils.DataClass):
         ('fdc_id', int),
         ('description', str),
         ('data_type', FoodDataType),
-        ('published_date', datetime.date, utils.fooddata.parse_date, {'sep': '/', 'format': 'MDY'}),
+        ('published_date', datetime.date,
+         utils.fooddata.parse_date, {'sep': '-', 'format': 'YMD'}),
         ('all_highlight_fields', str),
         ('score', float),
         # Survey only
@@ -41,9 +42,9 @@ class Food(utils.DataClass):
         ('brand_owner', str),
         # optional
         ('additional_descriptions', str),
-        # 'scientific_name',
-        # 'common_names',
-        # 'ndb_number'
+        ('scientific_name', str),
+        ('common_names', str),
+        ('ndb_number', str),
         # 'ingredients',
     )
 
