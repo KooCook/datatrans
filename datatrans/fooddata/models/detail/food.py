@@ -11,6 +11,7 @@ from typing import List, Dict, Union
 from datatrans import utils
 from datatrans.fooddata.models.search import FoodDataType
 from datatrans.fooddata.models.detail.nutrient import FoodNutrient
+from datatrans.fooddata.models.detail.base import IdMixin
 
 
 def parse_fooddata_date(date_str: str) -> datetime.date:

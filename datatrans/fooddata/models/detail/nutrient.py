@@ -1,7 +1,8 @@
 from datatrans import utils
+from datatrans.fooddata.models.detail.base import IdMixin
 
 
-class Nutrient(utils.DataClass):
+class Nutrient(IdMixin, utils.DataClass):
 
     __slots__ = ('rank', 'unit_name', 'id', 'name', 'number')
 
@@ -14,7 +15,7 @@ class Nutrient(utils.DataClass):
     }
 
 
-class FoodNutrientSource(utils.DataClass):
+class FoodNutrientSource(IdMixin, utils.DataClass):
 
     __slots__ = ('id', 'code', 'description')
 
@@ -25,7 +26,7 @@ class FoodNutrientSource(utils.DataClass):
     )
 
 
-class FoodNutrientDerivation(utils.DataClass):
+class FoodNutrientDerivation(IdMixin, utils.DataClass):
 
     __slots__ = ('description', 'food_nutrient_source', 'code', 'id')
 
@@ -37,9 +38,9 @@ class FoodNutrientDerivation(utils.DataClass):
     }
 
 
-class FoodNutrient(utils.DataClass):
     
     __slots__ = ('type', 'id', 'nutrient', 'food_nutrient_derivation', 'amount')
+class FoodNutrient(IdMixin, utils.DataClass):
 
     __attr__ = (
         ('type', str),  # FoodNutrient
