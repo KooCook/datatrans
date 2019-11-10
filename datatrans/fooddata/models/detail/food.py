@@ -254,7 +254,7 @@ class SrLegacyFood(utils.DataClass):
         ('ndb_number', str),
         ('fdc_id', int),
         # actual JSON
-        ('foodClass', FoodClass),
+        ('food_class', FoodClass),
         ('description', str),
         ('food_nutrients', list,  # type: List[FoodNutrient]
          parse_food_nutrients),
@@ -264,7 +264,6 @@ class SrLegacyFood(utils.DataClass):
         ('nutrient_conversion_factors', list,  # type: List[NutrientConversionFactor]
          parse_nutrient_conversion_factors),
         ('is_historical_reference', bool),
-        ('data_type', FoodDataType),
         ('data_type', FoodDataType),
         ('food_category', FoodCategory),
         ('food_portions', list,  # type: List[FoodPortion]
@@ -283,7 +282,7 @@ class SrLegacyFood(utils.DataClass):
         if self.data_type is not FoodDataType.LEGACY:
             raise ValueError('invalid value for \'{}\': \'{}\' \'{}\''
                              .format(self.__class__.__name__, 'data_type', self.data_type))
-        if self.table_alias_name == 'sr_legacy_food':
+        if self.table_alias_name != 'sr_legacy_food':
             raise ValueError('invalid value for \'{}\': \'{}\' \'{}\''
                              .format(self.__class__.__name__, 'table_alias_name', self.table_alias_name))
 
