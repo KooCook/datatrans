@@ -20,6 +20,15 @@ def send_food_search_api_request(
 
     Args:
         criteria: FoodData Central search criteria
+            general_search_input (str): Search query (general text)
+            included_data_types (Dict[str, bool]): Specific data types to include in search
+            ingredients: The list of ingredients (as it appears on the product label)
+            brand_owner (str): Brand owner for the food
+            require_all_words (bool): When True, the search will only return foods
+            contain all of the words that were entered in the search field
+            page_number (int): The page of results to return
+            sort_field (SortField): The name of the field by which to sort
+            sort_direction (SortDirection): The direction of the sorting
         api_key: Required. Must be a data.gov registered API key.
     """
     url = 'https://api.nal.usda.gov/fdc/v1/search'
