@@ -108,7 +108,7 @@ class DataClass(metaclass=DataClassMeta):
                     if params is None:
                         setattr(self, attr, init(_dict_.pop(snake_to_camel(attr))))
                     else:
-                        setattr(self, attr, init(_dict_.pop(snake_to_camel(attr), **params)))
+                        setattr(self, attr, init(_dict_.pop(snake_to_camel(attr)), **params))
                 else:
                     setattr(self, attr, None)
             except KeyError:
