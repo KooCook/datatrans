@@ -40,26 +40,43 @@ def parse_description(description: str) -> str:
 
 def main():
     ingr = []
+    ignored_category = (
+        FoodCategoryInstance.RESTAURANT_FOODS.value,
+        FoodCategoryInstance.MEALS_ENTREES_AND_SIDE_DISHES.value,
+        FoodCategoryInstance.BABY_FOODS.value,
+        FoodCategoryInstance.SOUPS_SAUCES_AND_GRAVIES.value,
+        FoodCategoryInstance.FAST_FOODS.value,
+        FoodCategoryInstance.SNACKS.value,  # Could be used, but ignore for now
+        FoodCategoryInstance.FAST_FOODS.value,
+    )
 
-    for i in range(1, 5):
+    for i in range(1, 2):
         criteria = fooddata.search.FoodSearchCriteria(
             general_search_input='',
             included_data_types={FoodDataType.LEGACY: True},
             page_number=i
         )
-        res = fooddata.api.send_food_search_api_request(criteria)
-        res = fooddata.search.response.FoodSearchResponse(res)
-        for food in res.foods:
+        search_res = fooddata.api.send_food_search_api_request(criteria)
+        search_res = fooddata.search.response.FoodSearchResponse(search_res)
+        for food in search_res.foods:
             if food.data_type is not FoodDataType.LEGACY:
                 continue
-            d = food.dict
-            d['description'] = parse_description(d['description'])
-            fields = ('fdc_id', 'common_names', 'description', '')
-            ingr.append({field: d.get(utils.snake_to_camel(field), None) for field in fields})
+            detail_res = fooddata.api.send_food_detail_api_request(food.fdc_id)
+            detail_res = fooddata.detail.response.FoodDetailResponse(detail_res, data_type=FoodDataType.LEGACY)
+            food_: fooddata.detail.SrLegacyFood = detail_res.food
+            if food_.food_category in ignored_category:
+                continue
+            ingr.append(
+                {
+                    'fdc_id': food_.fdc_id,
+                    'common_names': food_.common_names,
+                    'description': food_.description,
+                }
+            )
 
     overwrite_file(ingr)
 
 
 if __name__ == '__main__':
-    # main()
+    main()
     pass
