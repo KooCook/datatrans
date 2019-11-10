@@ -1,3 +1,5 @@
+import enum
+
 from datatrans import utils
 from datatrans.fooddata.models.detail.base import IdMixin
 
@@ -48,4 +50,20 @@ class FoodNutrient(IdMixin, utils.DataClass):
         ('nutrient', Nutrient),
         ('food_nutrient_derivation', FoodNutrientDerivation),
         ('amount', float),
+    )
+
+
+class NutrientConversionFactorType(enum.Enum):
+    PROTEIN = '.ProteinConversionFactor'
+    CALORIE = '.CalorieConversionFactor'
+
+
+class NutrientConversionFactor(IdMixin, utils.DataClass):
+    __attr__ = (
+        ('type', NutrientConversionFactorType),
+        ('id', int),
+        ('name', str),
+        ('protein_value', float),
+        ('fat_value', float),
+        ('carbohydrate_value', float),
     )
