@@ -62,7 +62,7 @@ def _parse_date_with_format(date_str: str, sep: str, format: str) -> datetime.da
     """
     parts = date_str.split(sep)
     if len(parts) != 3:
-        raise ValueError('parts is not 3')
+        raise ValueError('parts is not 3: {}'.format(parts))
     if format == 'DMY':
         return datetime.date.fromisoformat(
             '{}-{:0>2}-{:0>2}'.format(parts[2], parts[1], parts[0]))
