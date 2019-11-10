@@ -82,6 +82,13 @@ class FoodAttributeType(IdMixin, utils.DataClass):
     )
 
 
+class FoodAttributeTypeInstance(Enum):
+    ATTRIBUTE = FoodAttributeType(_dict_={'id': 999, 'name': 'Attribute', 'description': 'Generic attributes'})
+    COMMON_NAME = FoodAttributeType(_dict_={'id': 1000, 'name': 'Common Name', 'description': 'Common names associated with a food.'})
+    ADDITIONAL_DESCRIPTION = FoodAttributeType(_dict_={'id': 1001, 'name': 'Additional Description', 'description': 'Additional descriptions for the food.'})
+    ADJUSTMENTS = FoodAttributeType(_dict_={'id': 1002, 'name': 'Adjustments', 'description': 'Adjustments made to foods, including moisture and fat changes.'})
+
+
 class FoodAttribute(IdMixin, utils.DataClass):
     """The value for a generic property of a food
 
@@ -330,6 +337,13 @@ class SrLegacyFood(utils.DataClass):
         if self.table_alias_name != 'sr_legacy_food':
             raise ValueError('invalid value for \'{}\': \'{}\' \'{}\''
                              .format(self.__class__.__name__, 'table_alias_name', self.table_alias_name))
+
+    @property
+    def common_name(self):
+        """ Returns the common name if any, else None """
+        for attr in self.food_attributes:
+            if attr.food_attribute_type == FoodAttributeTypeInstance.COMMON_NAME.value:
+                return attr.value
 
 
 class SurveyFnddsFood(utils.DataClass):
