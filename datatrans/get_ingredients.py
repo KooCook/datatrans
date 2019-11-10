@@ -58,9 +58,15 @@ class FoodCategoryInstance(Enum):
     ALCOHOLIC_BEVERAGES = FoodCategory(_dict_={'id': 28, 'code': '1410', 'description': 'Alcoholic Beverages'})
 
 
-def write_to_file(data):
+def overwrite_file(data):
     file = DATA_DIR / 'ingredients.json'
     with file.open('w') as f:
+        f.write(json.dumps(data, cls=utils.JSONEncoder))
+
+
+def append_file(data):
+    file = DATA_DIR / 'ingredients.json'
+    with file.open('a') as f:
         f.write(json.dumps(data, cls=utils.JSONEncoder))
 
 
@@ -91,8 +97,8 @@ def main():
             d['description'] = parse_description(d['description'])
             fields = ('fdc_id', 'common_names', 'description', '')
             ingr.append({field: d.get(utils.snake_to_camel(field), None) for field in fields})
-    
-    write_to_file(ingr)
+
+    overwrite_file(ingr)
 
 
 if __name__ == '__main__':
