@@ -32,8 +32,11 @@ def snake_to_camel(s: str) -> str:
         >>> snake_to_camel('lonesnake')
         'lonesnake'
     """
-    first, *others = [word for word in s.split('_') if word]
-    return first + ''.join(s.title() for s in others)
+    try:
+        first, *others = [word for word in s.split('_') if word]
+        return first + ''.join(s.title() for s in others)
+    except ValueError:
+        return s
 
 
 def camel_to_snake(s: str) -> str:
