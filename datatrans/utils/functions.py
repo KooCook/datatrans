@@ -66,8 +66,15 @@ def to_constant(s: str) -> str:
     Examples:
         >>> to_constant('to_constant')
         'TO_CONSTANT'
+        >>> to_constant('Meals, Entrees, and Side Dishes')
+        'MEALS_ENTREES_AND_SIDE_DISHES'
+        >>> to_constant('American Indian/Alaska Native Foods')
+        'AMERICAN_INDIANALASKA_NATIVE_FOODS'
     """
-    return s.replace(' ', '_').upper()
+    s = s.replace(' ', '_')
+    s = ''.join(c.upper() for c in s if c in string.ascii_letters or c in '_')
+    assert s.isidentifier(), s
+    return s
 
 
 def trim_spaces(s: str) -> str:
