@@ -14,6 +14,11 @@ from datatrans.fooddata.models.search import FoodDataType
 from datatrans import utils
 
 
+def parse_fooddata_date(date_str: str) -> datetime.date:
+    """ Wrapper specific for fooddata's format """
+    return utils.fooddata.parse_date(date_str, sep='/', format='MDY')
+
+
 class FoodClass(enum.Enum):
     FOUNDATION = 'FinalFood'
     SURVEY = 'Survey'
@@ -60,9 +65,9 @@ class BrandedFood(utils.DataClass):
         ('branded_food_category', str),
         ('data_source', str),  # "LI"
         ('modified_date', datetime.date,
-         utils.fooddata.parse_date, {'sep': '/', 'format': 'MDY'}),
+         parse_fooddata_date),
         ('available_date', datetime.date,
-         utils.fooddata.parse_date, {'sep': '/', 'format': 'MDY'}),
+         parse_fooddata_date),
         # actual JSON
         ('foodClass', FoodClass),  # FoodClass.BRANDED
         ('food_nutrients', list),
@@ -73,7 +78,7 @@ class BrandedFood(utils.DataClass):
         ('label_nutrients', dict),  # Dict[name, Dict["value", value]]
         ('data_type', FoodDataType),
         ('publication_date', datetime.date,
-         utils.fooddata.parse_date, {'sep': '/', 'format': 'MDY'}),
+         parse_fooddata_date),
         ('food_portions', list),
         ('changes', str),
     )
@@ -101,7 +106,8 @@ class Food(utils.DataClass):
         ('data_type', FoodDataType),
         ('description', str),
         ('food_category_id', str),
-        ('publication_date', datetime.date, utils.fooddata.parse_date),
+        ('publication_date', datetime.date,
+         parse_fooddata_date),
         ('scientific_name', str),
         ('food_key', str),
     )
@@ -170,8 +176,10 @@ class SurveyFnddsFood(utils.DataClass):
         ('fdc_id', int),
         ('food_code', str),
         ('wweia_category_code', str),
-        ('start_date', datetime.date, utils.fooddata.parse_date),
-        ('end_date', datetime.date, utils.fooddata.parse_date),
+        ('start_date', datetime.date,
+         parse_fooddata_date),
+        ('end_date', datetime.date,
+         parse_fooddata_date),
     )
 
 
