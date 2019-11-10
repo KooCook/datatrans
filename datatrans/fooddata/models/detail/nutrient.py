@@ -90,6 +90,7 @@ class NutrientConversionFactor(IdMixin, utils.DataClass):
         ('type', NutrientConversionFactorType),
         ('id', int),
         ('name', str),
+        ('value', float),
         ('protein_value', float),
         ('fat_value', float),
         ('carbohydrate_value', float),
