@@ -288,11 +288,11 @@ class Recipe(Thing):
 
 if __name__ == '__main__':
     import json
-    from datatrans.structured_data import utils
+    from datatrans import utils
 
     print(
         json.dumps(NutritionInformation(calories=1024, ),
-                   default=utils.default))
+                   default=utils.json_encoder))
 
     print(
         json.dumps(Recipe(
@@ -344,5 +344,5 @@ if __name__ == '__main__':
                 duration=Duration(0, 1 * 60 + 33),
                 expires=Date(2019, 2, 5)),
             nutrition=NutritionInformation(calories=270)),
-                   default=utils.default))
+                   default=utils.json_encoder))
     pass

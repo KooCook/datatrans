@@ -1,11 +1,9 @@
-import enum
-
 from datatrans import utils
-from datatrans.fooddata.models.detail.base import IdMixin
+from datatrans.fooddata.detail.base import IdMixin
+from datatrans.utils.classes import JSONEnum as Enum
 
 
 class Nutrient(IdMixin, utils.DataClass):
-
     __slots__ = ('rank', 'unit_name', 'id', 'name', 'number')
 
     __attr__ = {
@@ -18,7 +16,6 @@ class Nutrient(IdMixin, utils.DataClass):
 
 
 class FoodNutrientSource(IdMixin, utils.DataClass):
-
     __slots__ = ('id', 'code', 'description')
 
     __attr__ = (
@@ -29,7 +26,6 @@ class FoodNutrientSource(IdMixin, utils.DataClass):
 
 
 class FoodNutrientDerivation(IdMixin, utils.DataClass):
-
     __slots__ = ('description', 'food_nutrient_source', 'code', 'id')
 
     __attr__ = {
@@ -80,7 +76,7 @@ class FoodNutrient(IdMixin, utils.DataClass):
     )
 
 
-class NutrientConversionFactorType(enum.Enum):
+class NutrientConversionFactorType(Enum):
     PROTEIN = '.ProteinConversionFactor'
     CALORIE = '.CalorieConversionFactor'
 

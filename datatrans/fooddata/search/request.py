@@ -3,29 +3,33 @@
 References:
     https://fdc.nal.usda.gov/api-guide.html#food-search-endpoint
 """
-import enum
-from typing import Dict
+from typing import Dict, Union
 
 from datatrans import utils
+from datatrans.utils.classes import JSONEnum as Enum
 
 
-class FoodDataType(enum.Enum):
+class FoodDataType(Enum):
     FOUNDATION = 'Foundation'
     SURVEY = 'Survey (FNDDS)'
     BRANDED = 'Branded'
     LEGACY = 'SR Legacy'
 
 
-class SortField(enum.Enum):
+class SortField(Enum):
     DESCRIPTION = 'lowercaseDescription.keyword'
     DATATYPE = 'dataType.keyword'
     PUBDATE = 'publishedDate'
     ID = 'fdcId'
 
 
-class SortDirection(enum.Enum):
+class SortDirection(Enum):
     ASC = 'asc'
     DESC = 'desc'
+
+
+def verify_included_data_types(d: Dict[Union[FoodDataType, str], bool]):
+    return {FoodDataType()}
 
 
 class FoodSearchCriteria(utils.DataClass):

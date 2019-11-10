@@ -1,9 +1,10 @@
 import abc
-import importlib
 import json
 from typing import List
 
-utils = importlib.import_module('datatrans.utils')
+from datatrans import utils
+
+# TODO: Change this to a DataClass0
 
 
 class Thing(metaclass=abc.ABCMeta):
@@ -24,7 +25,7 @@ class Thing(metaclass=abc.ABCMeta):
         return properties
 
     def __str__(self):
-        return json.dumps(self, default=utils.structured_data.default)
+        return json.dumps(self, default=utils.json_encoder)
 
     @property
     def type(self) -> str:

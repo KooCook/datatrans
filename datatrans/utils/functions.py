@@ -1,8 +1,6 @@
 import re
-from pathlib import Path
 from typing import Iterable, List, Match, Optional
 
-BASE_DIR = Path(__file__).parent.parent.parent
 NUMERAL = {
     'one': 1,
     'two': 2,
@@ -17,6 +15,7 @@ NUMERAL = {
     'eleven': 11,
     'twelve': 12,
 }
+
 
 def snake_to_camel(string: str) -> str:
     """Returns a new str in camelCase, given an str in snake case.
@@ -211,6 +210,17 @@ def get_closest_match(string: str, subs: Iterable[str]) -> Optional[str]:
         return difflib.get_close_matches(string, subs)[0]
     except IndexError:
         return
+
+
+def json_encoder(o):
+    """
+    Add JSON serialization capabilities to objects in this library.
+    """
+    if hasattr(o, 'json_serial'):
+        return o.json_serial()
+    else:
+        raise TypeError(f'Object of type {o.__class__.__name__} '
+                        f'is not JSON serializable')
 
 
 if __name__ == '__main__':

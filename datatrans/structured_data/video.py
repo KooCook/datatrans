@@ -95,7 +95,7 @@ class VideoObject(Thing):
 
 if __name__ == '__main__':
     import json
-    from datatrans.structured_data import utils
+    from datatrans import utils
     from datatrans.structured_data.lower.action import Action
     from datatrans.structured_data.base import DateTime
 
@@ -112,5 +112,5 @@ if __name__ == '__main__':
             userInteractionCount=567018,
             interactionType=Action.WatchAction
         )
-    ), default=utils.default))
+    ), default=utils.json_encoder))
     pass

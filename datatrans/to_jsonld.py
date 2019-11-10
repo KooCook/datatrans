@@ -5,6 +5,7 @@ from pathlib import Path
 
 import datatrans.structured_data as schema
 import datatrans.utils
+import datatrans.utils.functions
 import datatrans.utils.structured_data
 
 
@@ -130,7 +131,7 @@ if __name__ == '__main__':
 
     with open(datatrans.utils.BASE_DIR / 'assets/cookstr-recipes.json-ld', 'w') as jsonfile:
         for recipe in recipes:
-            jsonfile.write(json.dumps(recipe, default=datatrans.utils.structured_data.default))
+            jsonfile.write(json.dumps(recipe, default=datatrans.utils.functions.json_encoder))
             jsonfile.write('\n')
 
     # print(json.dumps(recipes, default=schema.utils.default))

@@ -5,13 +5,13 @@ References:
     https://fdc.nal.usda.gov/portal-data/external/dataDictionary
 """
 import datetime
-import enum
 from typing import List, Dict, Union
 
 from datatrans import utils
-from datatrans.fooddata.search import FoodDataType
-from datatrans.fooddata.models.detail.nutrient import FoodNutrient, NutrientConversionFactor
-from datatrans.fooddata.models.detail.base import IdMixin
+from datatrans.fooddata.detail.base import IdMixin
+from datatrans.fooddata.detail.nutrient import FoodNutrient, NutrientConversionFactor
+from datatrans.fooddata.search.request import FoodDataType
+from datatrans.utils.classes import JSONEnum as Enum
 
 
 def parse_fooddata_date(date_str: str) -> datetime.date:
@@ -36,7 +36,7 @@ def parse_food_portions(data: List[Dict[str, Union[str, float, int]]]) -> List['
     return [FoodPortion(_dict_=d) for d in data]
 
 
-class FoodClass(enum.Enum):
+class FoodClass(Enum):
     FOUNDATION = 'FinalFood'
     SURVEY = 'Survey'
     BRANDED = 'Branded'
@@ -190,8 +190,9 @@ class Food(utils.DataClass):
     """
 
     __slots__ = (
-    'fdc_id', 'description', 'data_type', 'published_date', 'all_highlight_fields', 'score', 'food_code', 'gtin_upc',
-    'brand_owner', 'additional_descriptions')
+        'fdc_id', 'description', 'data_type', 'published_date', 'all_highlight_fields', 'score', 'food_code',
+        'gtin_upc',
+        'brand_owner', 'additional_descriptions')
 
     __attr__ = (
         ('fdc_id', int),
@@ -245,9 +246,9 @@ class SrLegacyFood(utils.DataClass):
     """
 
     __slots__ = (
-    'ndb_number', 'fdc_id', 'food_class', 'description', 'food_nutrients', 'food_components', 'food_attributes',
-    'table_alias_name', 'nutrient_conversion_factors', 'is_historical_reference', 'data_type', 'data_type',
-    'food_category', 'food_portions', 'input_foods', 'publication_date', 'changes')
+        'ndb_number', 'fdc_id', 'food_class', 'description', 'food_nutrients', 'food_components', 'food_attributes',
+        'table_alias_name', 'nutrient_conversion_factors', 'is_historical_reference', 'data_type', 'data_type',
+        'food_category', 'food_portions', 'input_foods', 'publication_date', 'changes')
 
     __attr__ = (
         # Excel

@@ -20,13 +20,3 @@ def with_context(json_ld: str, context='https://schema.org/') -> str:
         warnings.warn('adding context to json-ld without "@type"')
     return '{"@context":"{}"'.format(context) + json_ld[0:]
 
-
-def default(o):
-    """
-    Add JSON serialization capabilities to objects in this library.
-    """
-    if hasattr(o, 'json_serial'):
-        return o.json_serial()
-    else:
-        raise TypeError(f'Object of type {o.__class__.__name__} '
-                        f'is not JSON serializable')

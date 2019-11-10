@@ -17,7 +17,7 @@ class Person(Thing):
 
 if __name__ == '__main__':
     import json
-    from datatrans.structured_data import utils
+    from datatrans import utils
 
-    print(json.dumps(Person('Mary Stone'), default=utils.default))
+    print(json.dumps(Person('Mary Stone'), default=utils.json_encoder))
     pass

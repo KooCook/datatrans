@@ -85,9 +85,9 @@ class DateTime(datetime.datetime, Date):
 
 if __name__ == '__main__':
     import json
-    import datatrans.utils.structured_data as utils
+    import datatrans.utils
 
-    print(json.dumps(Date(2018, 3, 10), default=utils.default))
-    print(json.dumps(Time(0, 20, 0), default=utils.default))
-    print(json.dumps(DateTime(2000, 3, 10, 12, 5), default=utils.default))
+    print(json.dumps(Date(2018, 3, 10), default=datatrans.utils.json_encoder))
+    print(json.dumps(Time(0, 20, 0), default=datatrans.utils.json_encoder))
+    print(json.dumps(DateTime(2000, 3, 10, 12, 5), default=datatrans.utils.json_encoder))
     pass

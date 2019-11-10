@@ -1,7 +1,8 @@
 import requests
 
+from datatrans.fooddata.search.request import FoodDataType
 from .food import FoodClass, FoundationFood, SurveyFnddsFood, BrandedFood, SrLegacyFood
-from datatrans.fooddata.search import FoodDataType
+
 
 class FoodDetailResponse:
     """ FoodData Detail endpoint Response handler. """
