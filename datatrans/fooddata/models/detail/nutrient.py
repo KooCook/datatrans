@@ -2,6 +2,9 @@ from datatrans import utils
 
 
 class Nutrient(utils.DataClass):
+
+    __slots__ = ('rank', 'unit_name', 'id', 'name', 'number')
+
     __attr__ = {
         ('id', int),
         ('number', str),
@@ -12,6 +15,9 @@ class Nutrient(utils.DataClass):
 
 
 class FoodNutrientSource(utils.DataClass):
+
+    __slots__ = ('id', 'code', 'description')
+
     __attr__ = (
         ('id', int),
         ('code', str),
@@ -20,6 +26,9 @@ class FoodNutrientSource(utils.DataClass):
 
 
 class FoodNutrientDerivation(utils.DataClass):
+
+    __slots__ = ('description', 'food_nutrient_source', 'code', 'id')
+
     __attr__ = {
         ('id', int),
         ('code', str),  # LCCD
@@ -29,6 +38,9 @@ class FoodNutrientDerivation(utils.DataClass):
 
 
 class FoodNutrient(utils.DataClass):
+    
+    __slots__ = ('type', 'id', 'nutrient', 'food_nutrient_derivation', 'amount')
+
     __attr__ = (
         ('type', str),  # FoodNutrient
         ('id', int),

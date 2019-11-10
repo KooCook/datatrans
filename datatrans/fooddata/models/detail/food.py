@@ -62,6 +62,11 @@ class BrandedFood(utils.DataClass):
             available for inclusion in the database.
     """
 
+    __slots__ = ('fdc_id', 'brand_owner', 'gtin_upc', 'ingredients', 'serving_size', 'household_serving_full_text',
+                 'branded_food_category', 'data_source', 'modified_date', 'available_date', 'foodClass', 'description',
+                 'food_nutrients', 'food_components', 'food_attributes', 'table_alias_name', 'serving_size_unit',
+                 'label_nutrients', 'data_type', 'publication_date', 'food_portions', 'changes')
+
     __attr__ = (
         # Excel
         ('fdc_id', int),
@@ -110,6 +115,10 @@ class Food(utils.DataClass):
         food_key: A string of characters used to identify both the
             current and all historical records for a specific food.
     """
+
+    __slots__ = (
+    'fdc_id', 'description', 'data_type', 'published_date', 'all_highlight_fields', 'score', 'food_code', 'gtin_upc',
+    'brand_owner', 'additional_descriptions')
 
     __attr__ = (
         ('fdc_id', int),

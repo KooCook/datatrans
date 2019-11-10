@@ -39,6 +39,10 @@ class FoodSearchCriteria(utils.DataClass):
         sort_direction (SortDirection): The direction of the sorting
     """
 
+    __slots__ = (
+    'general_search_input', 'included_data_types', 'ingredients', 'brand_owner', 'require_all_words', 'page_number',
+    'sort_field', 'sort_direction')
+
     __attr__ = (
         ('general_search_input', str),
         ('included_data_types', dict, lambda x: x),
