@@ -29,7 +29,13 @@ class SortDirection(Enum):
 
 
 def verify_included_data_types(d: Dict[Union[FoodDataType, str], bool]):
-    return {FoodDataType()}
+    d = {FoodDataType(k): v for k, v in d.items()}
+    return {
+        FoodDataType.FOUNDATION.value: d.pop(FoodDataType.FOUNDATION, False),
+        FoodDataType.SURVEY.value: d.pop(FoodDataType.SURVEY, False),
+        FoodDataType.BRANDED.value: d.pop(FoodDataType.BRANDED, False),
+        FoodDataType.LEGACY.value: d.pop(FoodDataType.LEGACY, False),
+    }
 
 
 class FoodSearchCriteria(utils.DataClass):
@@ -53,7 +59,8 @@ class FoodSearchCriteria(utils.DataClass):
 
     __attr__ = (
         ('general_search_input', str),
-        ('included_data_types', dict, lambda x: x),
+        ('included_data_types', dict,
+         verify_included_data_types),
         ('ingredients', str),
         ('brand_owner', str),
         ('require_all_words', bool),
@@ -63,7 +70,10 @@ class FoodSearchCriteria(utils.DataClass):
     )
 
     def __init__(self, _dict_: dict = None, **kwargs):
-        super(FoodSearchCriteria, self).__init__(_dict_)
+        if _dict_ is not None:
+            super().__init__(_dict_=_dict_)
+            return
         for k, v in kwargs.items():
             if k in self.__slots__:
-                setattr(self, k, v)
+                kwargs[utils.snake_to_camel(k)] = kwargs.pop(k)
+        super().__init__(_dict_=kwargs)
