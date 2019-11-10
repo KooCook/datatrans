@@ -19,13 +19,13 @@ def parse_fooddata_date(date_str: str) -> datetime.date:
     return utils.fooddata.parse_date(date_str, sep='/', format='MDY')
 
 
-def parse_food_nutrients(nutrients: List[Dict[str, Union[str, int, float]]]):
-    return [FoodNutrient(_dict_=d) for d in nutrients]
+def parse_food_nutrients(data: List[Dict[str, Union[str, int, float]]]) -> List[FoodNutrient]:
+    return [FoodNutrient(_dict_=d) for d in data]
 
 
-def parse_label_nutrients(label_nutrients: Dict[str, Dict[str, float]]) -> List[Dict[str, float]]:
+def parse_label_nutrients(data: Dict[str, Dict[str, float]]) -> List[Dict[str, float]]:
     """ Change incoming data to be in list format. """
-    return [{k: v['value']} for k, v in label_nutrients.items()]
+    return [{k: v['value']} for k, v in data.items()]
 
 
 def parse_nutrient_conversion_factors(data: List[Dict[str, Union[str, float]]]) -> List[NutrientConversionFactor]:
