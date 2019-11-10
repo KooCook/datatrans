@@ -1,5 +1,6 @@
 from operator import itemgetter
 from typing import Iterable
+import warnings
 
 from datatrans.utils.functions import snake_to_camel
 
@@ -57,6 +58,19 @@ class DataClassMeta(type):
         return super().__new__(mcs, name, bases, namespace)
 
 
+def validate_data_empty(_dict_: dict, strict: bool, suppress_warning: bool) -> None:
+    """ Raises exception or warning if _dict_ is not empty. """
+    if len(_dict_) != 0:
+        if strict:
+            raise ValueError(
+                'Extra keys unused \'{}\' '.format(_dict_)
+            )
+        elif suppress_warning:
+            warnings.warn(
+                'Extra keys unused \'{}\' '.format(_dict_),
+                ResourceWarning)
+
+
 class DataClass(metaclass=DataClassMeta):
 
     __attr__ = ()
@@ -103,16 +117,7 @@ class DataClass(metaclass=DataClassMeta):
                                 'specified type (\'{}\' is not \'{}\')'
                                 .format(attr, type(value), type_))
 
-        if kwargs.pop('strict', True):
-            if len(_dict_) != 0:
-                raise ValueError('Extra keys unused \'{}\' '
-                                 .format(_dict_))
-        elif kwargs.pop('suppress_warning', False):
-            import warnings
-            if len(_dict_) != 0:
-                warnings.warn('Extra keys unused \'{}\' '
-                              .format({k: '' for k in _dict_}), ResourceWarning)
-
+        validate_data_empty(_dict_, kwargs.pop('strict', True), kwargs.pop('suppress_warning', False))
 
     @property
     def dict(self) -> dict:
