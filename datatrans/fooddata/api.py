@@ -9,7 +9,6 @@ import decouple
 import requests
 
 from datatrans import utils
-from datatrans.fooddata import detail
 from datatrans.fooddata import search
 
 
