@@ -6,17 +6,25 @@ References:
 """
 import datetime
 import enum
-
-import requests
-
-from datatrans.fooddata.models.search import FoodDataType
+from typing import List, Dict, Union
 
 from datatrans import utils
+from datatrans.fooddata.models.search import FoodDataType
+from datatrans.fooddata.models.detail.nutrient import FoodNutrient
 
 
 def parse_fooddata_date(date_str: str) -> datetime.date:
     """ Wrapper specific for fooddata's format """
     return utils.fooddata.parse_date(date_str, sep='/', format='MDY')
+
+
+def parse_food_nutrients(nutrients: List[Dict[str, Union[str, int, float]]]):
+    return [FoodNutrient(_dict_=d) for d in nutrients]
+
+
+def parse_label_nutrients(label_nutrients: Dict[str, Dict[str, float]]) -> List[Dict[str, float]]:
+    """ Change incoming data to be in list format. """
+    return [{k: v['value']} for k, v in label_nutrients.items()]
 
 
 class FoodClass(enum.Enum):
@@ -71,12 +79,14 @@ class BrandedFood(utils.DataClass):
         # actual JSON
         ('foodClass', FoodClass),  # FoodClass.BRANDED
         ('description', str),
-        ('food_nutrients', list),
+        ('food_nutrients', list,
+         parse_food_nutrients),
         ('food_components', list),
         ('food_attributes', list),
         ('table_alias_name', str),  # "branded_food"
         ('serving_size_unit', str),  # lowercase g
-        ('label_nutrients', dict),  # Dict[name, Dict["value", value]]
+        ('label_nutrients', list,  # type: List[Dict[str, float]]
+         parse_label_nutrients),
         ('data_type', FoodDataType),
         ('publication_date', datetime.date,
          parse_fooddata_date),
@@ -182,32 +192,3 @@ class SurveyFnddsFood(utils.DataClass):
         ('end_date', datetime.date,
          parse_fooddata_date),
     )
-
-
-class FoodDetailResponse:
-    """ FoodData Detail endpoint Response handler. """
-
-    __slots__ = (
-        'response',
-        'food',
-    )
-
-    def __init__(self, response: requests.Response):
-        """
-
-        Args:
-            response: The Response returned by the FoodData Detail endpoint
-        """
-        self.response = response
-
-        data = response.json()
-        if data['foodClass'] == FoodClass.FOUNDATION.value:
-            self.food = FoundationFood(_dict_=data)
-        elif data['foodClass'] == FoodClass.SURVEY.value:
-            self.food = SurveyFnddsFood(_dict_=data)
-        elif data['foodClass'] == FoodClass.BRANDED.value:
-            self.food = BrandedFood(_dict_=data)
-        elif data['foodClass'] == FoodClass.LEGACY.value:
-            self.food = SrLegacyFood(_dict_=data)
-        else:
-            raise ValueError('\'foodClass\' is not recognized')
