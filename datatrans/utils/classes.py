@@ -62,7 +62,7 @@ class DataClass(metaclass=DataClassMeta):
     __attr__ = ()
     # ((name, type[, init][, kwargs]), ...)
 
-    def __init__(self, _dict_: dict = None):
+    def __init__(self, _dict_: dict = None, **kwargs):
         """
 
         Args:
@@ -103,9 +103,16 @@ class DataClass(metaclass=DataClassMeta):
                                 'specified type (\'{}\' is not \'{}\')'
                                 .format(attr, type(value), type_))
 
-        if len(_dict_) != 0:
-            raise ValueError('Extra keys unused \'{}\' '
-                             .format({k: '' for k in _dict_}))
+        if kwargs.pop('strict', True):
+            if len(_dict_) != 0:
+                raise ValueError('Extra keys unused \'{}\' '
+                                 .format(_dict_))
+        elif kwargs.pop('suppress_warning', False):
+            import warnings
+            if len(_dict_) != 0:
+                warnings.warn('Extra keys unused \'{}\' '
+                              .format({k: '' for k in _dict_}), ResourceWarning)
+
 
     @property
     def dict(self) -> dict:
