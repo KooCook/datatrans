@@ -2,6 +2,9 @@ from datatrans import utils
 from datatrans.fooddata.detail.base import IdMixin
 from datatrans.utils.classes import JSONEnum as Enum
 
+__all__ = ['Nutrient', 'FoodNutrient', 'FoodNutrientDerivation', 'FoodNutrientSource', 'NutrientConversionFactorType',
+           'NutrientConversionFactor']
+
 
 class Nutrient(IdMixin, utils.DataClass):
     __slots__ = ('rank', 'unit_name', 'id', 'name', 'number')

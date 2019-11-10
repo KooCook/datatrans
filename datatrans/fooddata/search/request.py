@@ -9,6 +9,9 @@ from datatrans import utils
 from datatrans.utils.classes import JSONEnum as Enum
 
 
+__all__ = ['FoodDataType', 'SortField', 'SortDirection', 'FoodSearchCriteria']
+
+
 class FoodDataType(Enum):
     FOUNDATION = 'Foundation'
     SURVEY = 'Survey (FNDDS)'

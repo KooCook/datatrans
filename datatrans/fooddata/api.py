@@ -11,6 +11,8 @@ import requests
 from datatrans import utils
 from datatrans.fooddata import search
 
+__all__ = ['send_food_search_api_request', 'send_food_detail_api_request']
+
 
 def send_food_search_api_request(
         criteria: search.request.FoodSearchCriteria,
