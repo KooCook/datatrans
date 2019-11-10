@@ -10,7 +10,7 @@ from typing import List, Dict, Union
 
 from datatrans import utils
 from datatrans.fooddata.models.search import FoodDataType
-from datatrans.fooddata.models.detail.nutrient import FoodNutrient
+from datatrans.fooddata.models.detail.nutrient import FoodNutrient, NutrientConversionFactor
 from datatrans.fooddata.models.detail.base import IdMixin
 
 
@@ -26,6 +26,10 @@ def parse_food_nutrients(nutrients: List[Dict[str, Union[str, int, float]]]):
 def parse_label_nutrients(label_nutrients: Dict[str, Dict[str, float]]) -> List[Dict[str, float]]:
     """ Change incoming data to be in list format. """
     return [{k: v['value']} for k, v in label_nutrients.items()]
+
+
+def parse_nutrient_conversion_factors(data: List[Dict[str, Union[str, float]]]) -> List[NutrientConversionFactor]:
+    return [NutrientConversionFactor(d) for d in data]
 
 
 class FoodClass(enum.Enum):
