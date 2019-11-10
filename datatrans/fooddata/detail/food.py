@@ -245,7 +245,7 @@ class SrLegacyFood(utils.DataClass):
     """
 
     __slots__ = (
-    'ndb_number', 'fdc_id', 'foodClass', 'description', 'food_nutrients', 'food_components', 'food_attributes',
+    'ndb_number', 'fdc_id', 'food_class', 'description', 'food_nutrients', 'food_components', 'food_attributes',
     'table_alias_name', 'nutrient_conversion_factors', 'is_historical_reference', 'data_type', 'data_type',
     'food_category', 'food_portions', 'input_foods', 'publication_date', 'changes')
 
