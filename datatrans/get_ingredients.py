@@ -23,7 +23,7 @@ class FoodCategoryInstance(Enum):
     BABY_FOODS = FoodCategory(_dict_={'id': 3, 'code': '0300', 'description': 'Baby Foods'})
     FATS_AND_OILS = FoodCategory(_dict_={'id': 4, 'code': '0400', 'description': 'Fats and Oils'})
     POULTRY_PRODUCTS = FoodCategory(_dict_={'id': 5, 'code': '0500', 'description': 'Poultry Products'})
-    SOUPS, _SAUCES, _AND_GRAVIES = FoodCategory(
+    SOUPS_SAUCES_AND_GRAVIES = FoodCategory(
         _dict_={'id': 6, 'code': '0600', 'description': 'Soups, Sauces, and Gravies'})
     SAUSAGES_AND_LUNCHEON_MEATS = FoodCategory(
         _dict_={'id': 7, 'code': '0700', 'description': 'Sausages and Luncheon Meats'})
@@ -39,13 +39,13 @@ class FoodCategoryInstance(Enum):
         _dict_={'id': 15, 'code': '1500', 'description': 'Finfish and Shellfish Products'})
     LEGUMES_AND_LEGUME_PRODUCTS = FoodCategory(
         _dict_={'id': 16, 'code': '1600', 'description': 'Legumes and Legume Products'})
-    LAMB, _VEAL, _AND_GAME_PRODUCTS = FoodCategory(
+    LAMB_VEAL_AND_GAME_PRODUCTS = FoodCategory(
         _dict_={'id': 17, 'code': '1700', 'description': 'Lamb, Veal, and Game Products'})
     BAKED_PRODUCTS = FoodCategory(_dict_={'id': 18, 'code': '1800', 'description': 'Baked Products'})
     SWEETS = FoodCategory(_dict_={'id': 19, 'code': '1900', 'description': 'Sweets'})
     CEREAL_GRAINS_AND_PASTA = FoodCategory(_dict_={'id': 20, 'code': '2000', 'description': 'Cereal Grains and Pasta'})
     FAST_FOODS = FoodCategory(_dict_={'id': 21, 'code': '2100', 'description': 'Fast Foods'})
-    MEALS, _ENTREES, _AND_SIDE_DISHES = FoodCategory(
+    MEALS_ENTREES_AND_SIDE_DISHES = FoodCategory(
         _dict_={'id': 22, 'code': '2200', 'description': 'Meals, Entrees, and Side Dishes'})
     SNACKS = FoodCategory(_dict_={'id': 23, 'code': '2500', 'description': 'Snacks'})
     AMERICAN_INDIAN_ALASKA_NATIVE_FOODS = FoodCategory(
