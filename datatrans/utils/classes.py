@@ -4,6 +4,8 @@ import warnings
 
 from datatrans.utils.functions import snake_to_camel
 
+__all__ = ['DataClass']
+
 
 def one_itemgetter(*items):
     def get(obj):
