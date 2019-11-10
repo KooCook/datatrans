@@ -5,12 +5,11 @@ References:
 """
 import datetime
 import enum
-import importlib
 from typing import Dict, List
 
 import requests
 
-utils = importlib.import_module('datatrans.utils')
+from datatrans import utils
 
 
 class SortField(enum.Enum):
