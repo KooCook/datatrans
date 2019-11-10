@@ -61,7 +61,7 @@ class BrandedFood(utils.DataClass):
         ('gtin_upc', str),  # 11 digits of number (0-9)
         ('ingredients', str),  # csv (with spaces)
         ('serving_size', float),  # may be int
-        ('household_serving_fulltext', str),  # cup
+        ('household_serving_full_text', str),  # cup
         ('branded_food_category', str),
         ('data_source', str),  # "LI"
         ('modified_date', datetime.date,
