@@ -1,2 +1,3 @@
-from datatrans.utils.classes.dataclass import *
-from datatrans.utils.classes.jsonenum import *
+from .dataclass import *
+from .jsonenum import *
+from .encoder import *
