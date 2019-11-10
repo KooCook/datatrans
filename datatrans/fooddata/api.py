@@ -39,7 +39,8 @@ def send_food_search_api_request(
     if api_key == 'MY_API_KEY':
         raise UserWarning('Invalid API key, configure API key in .env first')
 
-    return requests.post(url, params={'api_key': api_key}, data=json.dumps(data),
+    return requests.post(url, params={'api_key': api_key},
+                         data=json.dumps(data, cls=utils.JSONEncoder),
                          headers={'Content-Type': 'application/json'})
 
 
