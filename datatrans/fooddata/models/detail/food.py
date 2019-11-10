@@ -158,7 +158,8 @@ class BrandedFood(utils.DataClass):
         ('data_type', FoodDataType),
         ('publication_date', datetime.date,
          parse_fooddata_date),
-        ('food_portions', list),
+        ('food_portions', list,  # type: List[FoodPortion]
+         parse_food_portions),
         ('changes', str),
     )
 
@@ -235,9 +236,42 @@ class SrLegacyFood(utils.DataClass):
     """
 
     __attr__ = (
+        # Excel
+        ('ndb_number', str),
         ('fdc_id', int),
-        ('NDB_number', str),  # temp
+        # actual JSON
+        ('foodClass', FoodClass),
+        ('description', str),
+        ('food_nutrients', list,  # type: List[FoodNutrient]
+         parse_food_nutrients),
+        ('food_components', list),
+        ('food_attributes', list),
+        ('table_alias_name', str),
+        ('nutrient_conversion_factors', list,  # type: List[NutrientConversionFactor]
+         parse_nutrient_conversion_factors),
+        ('is_historical_reference', bool),
+        ('data_type', FoodDataType),
+        ('data_type', FoodDataType),
+        ('food_category', FoodCategory),
+        ('food_portions', list,  # type: List[FoodPortion]
+         parse_food_portions),
+        ('input_foods', list),
+        ('publication_date', datetime.date,
+         parse_fooddata_date),
+        ('changes', str),
     )
+
+    def __init__(self, _dict_: dict = None, **kwargs):
+        super().__init__(_dict_, **kwargs)
+        if self.food_class is not FoodClass.LEGACY:
+            raise ValueError('invalid value for \'{}\': \'{}\' \'{}\''
+                             .format(self.__class__.__name__, 'food_class', self.food_class))
+        if self.data_type is not FoodDataType.LEGACY:
+            raise ValueError('invalid value for \'{}\': \'{}\' \'{}\''
+                             .format(self.__class__.__name__, 'data_type', self.data_type))
+        if self.table_alias_name == 'sr_legacy_food':
+            raise ValueError('invalid value for \'{}\': \'{}\' \'{}\''
+                             .format(self.__class__.__name__, 'table_alias_name', self.table_alias_name))
 
 
 class SurveyFnddsFood(utils.DataClass):
