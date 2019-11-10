@@ -201,12 +201,12 @@ class FoodDetailResponse:
 
         data = response.json()
         if data['foodClass'] == FoodClass.FOUNDATION.value:
-            pass
+            self.food = FoundationFood(_dict_=data)
         elif data['foodClass'] == FoodClass.SURVEY.value:
-            pass
+            self.food = SurveyFnddsFood(_dict_=data)
         elif data['foodClass'] == FoodClass.BRANDED.value:
-            pass
+            self.food = BrandedFood(_dict_=data)
         elif data['foodClass'] == FoodClass.LEGACY.value:
-            pass
+            self.food = SrLegacyFood(_dict_=data)
         else:
             raise ValueError('\'foodClass\' is not recognized')
