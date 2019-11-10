@@ -107,6 +107,7 @@ class DataClass(metaclass=DataClassMeta):
             raise ValueError('Extra keys unused \'{}\' '
                              .format({k: '' for k in _dict_}))
 
+    @property
     def dict(self) -> dict:
         """ Returns a dict of the data with fields in camelCase. """
         return {snake_to_camel(field): getattr(self, field)
@@ -114,4 +115,4 @@ class DataClass(metaclass=DataClassMeta):
                 if getattr(self, field) is not None}
 
     def items(self) -> Iterable:
-        return self.dict().items()
+        return self.dict.items()
