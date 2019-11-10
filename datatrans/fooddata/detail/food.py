@@ -13,7 +13,8 @@ from datatrans.fooddata.detail.nutrient import FoodNutrient, NutrientConversionF
 from datatrans.fooddata.search.request import FoodDataType
 from datatrans.utils.classes import JSONEnum as Enum
 
-__all__ = ['FoodClass', 'FoodCategory', 'MeasureUnit', 'FoodPortion', 'BrandedFood', 'SrLegacyFood']
+__all__ = ['FoodClass', 'FoodCategory', 'FoodCategoryInstance', 'FoodAttribute', 'FoodAttributeType',
+           'FoodAttributeTypeInstance', 'MeasureUnit', 'FoodPortion', 'BrandedFood', 'SrLegacyFood']
 
 
 def parse_fooddata_date(date_str: str) -> datetime.date:
