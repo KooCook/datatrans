@@ -9,6 +9,13 @@ from typing import Dict
 from datatrans import utils
 
 
+class FoodDataType(enum.Enum):
+    FOUNDATION = 'Foundation'
+    SURVEY = 'Survey (FNDDS)'
+    BRANDED = 'Branded'
+    LEGACY = 'SR Legacy'
+
+
 class SortField(enum.Enum):
     DESCRIPTION = 'lowercaseDescription.keyword'
     DATATYPE = 'dataType.keyword'
@@ -56,13 +63,3 @@ class FoodSearchCriteria(utils.DataClass):
         for k, v in kwargs.items():
             if k in self.__slots__:
                 setattr(self, k, v)
-
-
-#
-
-
-class FoodDataType(enum.Enum):
-    FOUNDATION = 'Foundation'
-    SURVEY = 'Survey (FNDDS)'
-    BRANDED = 'Branded'
-    LEGACY = 'SR Legacy'
