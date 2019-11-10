@@ -54,6 +54,21 @@ class FoodCategory(IdMixin, utils.DataClass):
     )
 
 
+class MeasureUnit(IdMixin, utils.DataClass):
+    """units for measuring quantities of foods
+
+    Attributes:
+        id (int):
+        name: name of the unit
+        abbreviation: abbreviated name of the unit
+    """
+    __attr__ = (
+        ('id', int),
+        ('name', str),
+        ('abbreviation', str),
+    )
+
+
 class BrandedFood(utils.DataClass):
     """
     Foods whose nutrient values are typically obtained from food label
