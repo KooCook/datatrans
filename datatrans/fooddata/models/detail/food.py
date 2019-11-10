@@ -32,6 +32,10 @@ def parse_nutrient_conversion_factors(data: List[Dict[str, Union[str, float]]]) 
     return [NutrientConversionFactor(_dict_=d) for d in data]
 
 
+def parse_food_portions(data: List[Dict[str, Union[str, float, int]]]) -> List['FoodPortion']:
+    return [FoodPortion(_dict_=d) for d in data]
+
+
 class FoodClass(enum.Enum):
     FOUNDATION = 'FinalFood'
     SURVEY = 'Survey'
