@@ -6,13 +6,12 @@ References:
 """
 import datetime
 import enum
-import importlib
 
 import requests
 
 from datatrans.fooddata.models.search import FoodDataType
 
-utils = importlib.import_module('datatrans.utils')
+from datatrans import utils
 
 
 class FoodClass(enum.Enum):
