@@ -38,6 +38,10 @@ def parse_food_portions(data: List[Dict[str, Union[str, float, int]]]) -> List['
     return [FoodPortion(_dict_=d) for d in data]
 
 
+def parse_food_attributes(data: List[Dict[str, Union[int, str, dict]]]) -> List['FoodAttribute']:
+    return [FoodAttribute(_dict_=d) for d in data]
+
+
 class FoodClass(Enum):
     FOUNDATION = 'FinalFood'
     SURVEY = 'Survey'
@@ -60,6 +64,42 @@ class FoodCategory(IdMixin, utils.DataClass):
         ('id', int),
         ('code', str),
         ('description', str),
+    )
+
+
+class FoodAttributeType(IdMixin, utils.DataClass):
+    """The list of supported attributes associated with a food
+
+    Attributes:
+        id (int):
+        name (str): Name of the attribute associated with the food - should be displayable to users
+        description (str): Description of the attribute
+    """
+    __attr__ = (
+        ('id', int),
+        ('name', str),
+        ('description', str),
+    )
+
+
+class FoodAttribute(IdMixin, utils.DataClass):
+    """The value for a generic property of a food
+
+    Attributes:
+        id (int):
+        fdc_id (int): ID of the food this food attribute pertains to
+        sequence_number (int): The order the attribute will be displayed on the released food.
+        food_attribute_type (FoodAttributeType): Type of food attribute to which this value is associated for a specific food
+        name (str): Name of food attribute
+        value: The actual value of the attribute
+    """
+    __attr__ = (
+        ('id', int),
+        ('fdc_id', int),
+        ('sequence_number', int),
+        ('food_attribute_type', FoodAttributeType),
+        ('name', str),
+        ('value', str),
     )
 
 
@@ -262,7 +302,9 @@ class SrLegacyFood(utils.DataClass):
         ('food_nutrients', list,  # type: List[FoodNutrient]
          parse_food_nutrients),
         ('food_components', list),
-        ('food_attributes', list),
+        ('scientific_name', str),
+        ('food_attributes', list,  # type: List[FoodAttribute]
+         parse_food_attributes),
         ('table_alias_name', str),
         ('nutrient_conversion_factors', list,  # type: List[NutrientConversionFactor]
          parse_nutrient_conversion_factors),
