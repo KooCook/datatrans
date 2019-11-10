@@ -21,12 +21,16 @@ class FoodDetailResponse:
 
         data = response.json()
         if data['foodClass'] == FoodClass.FOUNDATION.value:
-            self.food = FoundationFood(_dict_=data)
+            try:
+                self.food = SrLegacyFood(_dict_=data)
+            except ValueError as e:
+                try:
+                    self.food = FoundationFood(_dict_=data)
+                except ValueError as ee:
+                    raise ee from e
         elif data['foodClass'] == FoodClass.SURVEY.value:
             self.food = SurveyFnddsFood(_dict_=data)
         elif data['foodClass'] == FoodClass.BRANDED.value:
             self.food = BrandedFood(_dict_=data)
-        elif data['foodClass'] == FoodClass.LEGACY.value:
-            self.food = SrLegacyFood(_dict_=data)
         else:
             raise ValueError('\'foodClass\' is not recognized')
