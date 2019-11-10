@@ -73,6 +73,34 @@ class MeasureUnit(IdMixin, utils.DataClass):
     )
 
 
+class FoodPortion(IdMixin, utils.DataClass):
+    """Discrete amount of food
+
+    Attributes:
+        id (int):
+        fdc_id: ID of the food this food portion pertains to
+
+        seq_num: The order the measure will be displayed on the released food.
+        amount: The number of measure units that comprise the measure (e.g. if measure is 3 tsp, the amount is 3). Not defined for survey (FNDDS) foods (amount is instead embedded in portion description).
+        measure_unit: The unit used for the measure (e.g. if measure is 3 tsp, the unit is tsp). For food types that do not use measure SR legacy foods and survey (FNDDS) foods), a value of '9999' is assigned to this field.
+        portion_description: Foundation foods: Comments that provide more specificity on the measure. For example, for a pizza measure the dissemination text might be 1 slice is 1/8th of a 14 inch pizza"."   Survey (FNDDS) foods: The household description of the portion.
+        modifier: Foundation foods: Qualifier of the measure (e.g. related to food shape or form)  (e.g. melted, crushed, diced). Survey (FNDDS) foods: The portion code. SR legacy foods: description of measures, including the unit of measure and the measure modifier (e.g. waffle round (4" dia)).
+        gram_weight: The weight of the measure in grams
+        data_points: The number of observations on which the measure is based
+        footnote: Comments on any unusual aspects of the measure. These are released to the public. Examples might include caveats on the usage of a measure, or reasons why a measure gram weight is an unexpected value.
+        min_year_acquired: Minimum purchase year of all acquisitions used to derive the measure value
+    """
+    __attr__ = (
+        ('id', int),
+        ('measure_unit', MeasureUnit),
+        ('modifier', str),
+        ('gram_weight', float),
+        ('data_points', int),
+        ('amount', float),
+        ('sequence_number', int),
+    )
+
+
 class BrandedFood(utils.DataClass):
     """
     Foods whose nutrient values are typically obtained from food label
