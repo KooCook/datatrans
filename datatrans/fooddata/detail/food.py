@@ -137,7 +137,7 @@ class BrandedFood(utils.DataClass):
     """
 
     __slots__ = ('fdc_id', 'brand_owner', 'gtin_upc', 'ingredients', 'serving_size', 'household_serving_full_text',
-                 'branded_food_category', 'data_source', 'modified_date', 'available_date', 'foodClass', 'description',
+                 'branded_food_category', 'data_source', 'modified_date', 'available_date', 'food_class', 'description',
                  'food_nutrients', 'food_components', 'food_attributes', 'table_alias_name', 'serving_size_unit',
                  'label_nutrients', 'data_type', 'publication_date', 'food_portions', 'changes')
 
@@ -156,7 +156,7 @@ class BrandedFood(utils.DataClass):
         ('available_date', datetime.date,
          parse_fooddata_date),
         # actual JSON
-        ('foodClass', FoodClass),  # FoodClass.BRANDED
+        ('food_class', FoodClass),  # FoodClass.BRANDED
         ('description', str),
         ('food_nutrients', list,
          parse_food_nutrients),
