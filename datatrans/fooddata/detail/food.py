@@ -188,6 +188,7 @@ class FoodPortion(IdMixin, utils.DataClass):
         ('data_points', int),
         ('amount', float),
         ('sequence_number', int),
+        ('portion_description', str),  # Unit
     )
 
 
@@ -397,9 +398,26 @@ class SurveyFnddsFood(utils.DataClass):
     __attr__ = (
         ('fdc_id', int),
         ('food_code', str),
-        ('wweia_category_code', str),
         ('start_date', datetime.date,
          parse_fooddata_date),
         ('end_date', datetime.date,
          parse_fooddata_date),
+        ('food_class', FoodClass),
+        ('description', str),
+        ('food_nutrients', list,  # type: List[FoodNutrient]
+         parse_food_nutrients),
+        ('food_components', list),
+        ('scientific_name', str),
+        ('food_attributes', list,  # type: List[FoodAttribute]
+         parse_food_attributes),
+        ('table_alias_name', str),
+        ('wweia_category', str),  # need further process
+        ('wweia_food_category', str),  # need further process
+        ('data_type', FoodDataType),
+        ('publication_date', datetime.date,
+         parse_fooddata_date),
+        ('food_portions', list,  # type: List[FoodPortion]
+         parse_food_portions),
+        ('input_foods', list),
+        ('changes', str),
     )
