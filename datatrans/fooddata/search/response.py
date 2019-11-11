@@ -6,6 +6,8 @@ import requests
 from datatrans import utils
 from datatrans.fooddata.search.request import FoodDataType, FoodSearchCriteria
 
+__all__ = ['Food', 'FoodSearchResponse']
+
 
 class Food(utils.DataClass):
     """Represents a minimal food object returned by FoodData Search endpoint.
