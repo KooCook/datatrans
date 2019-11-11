@@ -47,7 +47,7 @@ class Food(utils.DataClass):
         ('scientific_name', str),
         ('common_names', str),
         ('ndb_number', str),
-        # 'ingredients',
+        ('ingredients', str),  # need parsing
     )
 
 
