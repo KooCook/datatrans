@@ -189,6 +189,7 @@ class FoodPortion(IdMixin, utils.DataClass):
         ('amount', float),
         ('sequence_number', int),
         ('portion_description', str),  # Unit
+        ('min_year_acquired', int),
     )
 
 
@@ -311,6 +312,27 @@ class FoundationFood(utils.DataClass):
         ('fdc_id', int),
         ('NDB_number', str),  # temp
         ('footnote', str),
+        # actual JSON
+        ('food_class', FoodClass),
+        ('food_nutrients', list,  # type: List[FoodNutrient]
+         parse_food_nutrients),
+        ('description', str),
+        ('food_components', list),
+        ('food_attributes', list,  # type: List[FoodAttribute]
+         parse_food_attributes),
+        ('table_alias_name', str),
+        ('nutrient_conversion_factors', list,  # type: List[NutrientConversionFactor]
+         parse_nutrient_conversion_factors),
+        ('is_historical_reference', bool),
+        ('ndb_number', str),
+        ('publication_date', datetime.date,
+         parse_fooddata_date),
+        ('food_category', FoodCategory),
+        ('food_portions', list,  # type: List[FoodPortion]
+         parse_food_portions),
+        ('data_type', FoodDataType),
+        ('input_foods', list),
+        ('changes', str),
     )
 
 

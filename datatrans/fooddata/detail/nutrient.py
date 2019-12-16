@@ -75,8 +75,12 @@ class FoodNutrient(IdMixin, utils.DataClass):
         ('food_nutrient_derivation', FoodNutrientDerivation),
         ('max', float),
         ('min', float),
+        ('median', float),
         ('amount', float),
         ('footnote', str),
+        ('nutrient_analysis_details', str),  # temp
+        ('nutrient_acquisition_details', str),  # temp
+        ('min_year_acquired', str),  # temp
     )
 
 

@@ -72,8 +72,8 @@ class FoodSearchResponse:
         self.response = response
 
         data = response.json()
+        self.foods: List[Food] = [Food(_dict_=_dict_) for _dict_ in data['foods']]
         self.food_search_criteria = FoodSearchCriteria(_dict_=data['foodSearchCriteria'])
         self.total_hits: int = data['totalHits']
         self.current_page: int = data['currentPage']
         self.total_pages: int = data['totalPages']
-        self.foods: List[Food] = [Food(_dict_=_dict_) for _dict_ in data['foods']]
